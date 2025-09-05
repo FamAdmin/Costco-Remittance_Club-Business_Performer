@@ -1,0 +1,535 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="GetTransactionData" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:sd1="clr-namespace:System.Data;assembly=Studio.Generated.TypedDataRow29" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umas="clr-namespace:UiPath.MicrosoftOffice365.Activities.Sharepoint;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umase="clr-namespace:UiPath.MicrosoftOffice365.Activities.Sharepoint.Enums;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umasm="clr-namespace:UiPath.MicrosoftOffice365.Activities.Sharepoint.Models;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umsm="clr-namespace:UiPath.MicrosoftOffice365.Sharepoint.Models;assembly=UiPath.MicrosoftOffice365" xmlns:umsmc="clr-namespace:UiPath.MicrosoftOffice365.Sharepoint.Models.Columns;assembly=UiPath.MicrosoftOffice365" xmlns:usau="clr-namespace:UiPath.Shared.Activities.Utils;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Sequential counter of transaction items." Name="in_TransactionNumber" Type="InArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="out_TransactionItem" Type="OutArgument(ui:QueueItem)" />
+    <x:Property sap2010:Annotation.AnnotationText="Allow the optional addition of information about the transaction item." Name="out_TransactionField1" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Allow the optional addition of information about the transaction item." Name="out_TransactionField2" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Transaction ID used for information and logging purposes. Ideally, the ID should be unique for each transaction. " Name="out_TransactionID" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="This variable can be used in case transactions are stored in a DataTable (for example, after being retrieved from a spreadsheet)." Name="io_dt_TransactionData" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="in_AuditLogFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="out_RemittanceListReference" Type="OutArgument(sd:DataRow)" />
+  </x:Members>
+  <this:GetTransactionData.in_AuditLogFilePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:GetTransactionData.in_AuditLogFilePath>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1382,2138.6666666666665</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>GetTransactionData_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>Microsoft.Activities</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.Numerics</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Sharepoint</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Sharepoint.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Sharepoint.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Sharepoint.Enums</x:String>
+      <x:String>UiPath.Shared.Activities.Utils</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.Shared.Activities.ConnectionService.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Sharepoint.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Persistence.Activities</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow13</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow19</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow18</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow12</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow10</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow9</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow11</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow25</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow17</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow22</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow27</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow14</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow1</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow3</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable4</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable21</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable7</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow8</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow28</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow2</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow6</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow26</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow15</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow24</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow20</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow16</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow23</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable5</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow29</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Get a transaction item from a specified source (e.g., Orchestrator queues, spreadsheets, databases, mailboxes or web APIs). &#xA;&#xA;If there are no transaction items remaining, out_TransactionItem is set to Nothing, which leads to the End Process state. &#xA;&#xA;For cases in which there is only a single transaction (i.e., a linear process), use an If activity to check whether the argument in_TransactionNumber has the value 1 (meaning it is the first and only transaction) and assign the transaction item to out_TransactionItem. For any other value of in_TransactionNumber, out_TransactionItem should be set to Nothing.&#xA;&#xA;If there are multiple transactions, use the argument in_TransactionNumber as an index to retrieve the correct transaction to be processed. If there are no more transactions left, it is necessary to set out_TransactionItem to Nothing, thus ending the process." DisplayName="Get Transaction Data" sap:VirtualizedContainerService.HintSize="1452.0000000000002,3268.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="628.8,3169.6" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+      <TryCatch.Try>
+        <Sequence sap:VirtualizedContainerService.HintSize="592,2915.2" sap2010:WorkflowViewState.IdRef="Sequence_13">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="558.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Get the transaction item"]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <ui:RetryScope DisplayName="Retry Get transaction item" sap:VirtualizedContainerService.HintSize="558.4,520" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="[Cint(in_Config(&quot;RetryNumberGetTransactionItem&quot;))]">
+            <ui:RetryScope.ActivityBody>
+              <ActivityAction>
+                <Sequence sap:VirtualizedContainerService.HintSize="416,312" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:GetQueueItem ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Get a transaction item from the specified Orchestrator queue.&#xA;If queues are not used in this process, replace this activity with the appropriated logic to retrieve transaction items.&#xA;For example, if transactions are rows from a DataTable, the row corresponding to the current transaction is retrieved at this point." DisplayName="Get transaction item" FolderPath="[in_Config(&quot;OrchestratorQueueFolder&quot;).ToString]" sap:VirtualizedContainerService.HintSize="382.4,252" sap2010:WorkflowViewState.IdRef="GetQueueItem_3" QueueType="[in_Config(&quot;OrchestratorQueueName&quot;).ToString]" TransactionItem="[out_TransactionItem]">
+                    <ui:GetQueueItem.Reference>
+                      <InArgument x:TypeArguments="x:String" />
+                    </ui:GetQueueItem.Reference>
+                    <ui:GetQueueItem.TimeoutMS>
+                      <InArgument x:TypeArguments="x:Int32" />
+                    </ui:GetQueueItem.TimeoutMS>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:GetQueueItem>
+                </Sequence>
+              </ActivityAction>
+            </ui:RetryScope.ActivityBody>
+            <ui:RetryScope.Condition>
+              <ActivityFunc x:TypeArguments="x:Boolean" />
+            </ui:RetryScope.Condition>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:RetryScope>
+          <Sequence sap:VirtualizedContainerService.HintSize="558.4,1875.2" sap2010:WorkflowViewState.IdRef="Sequence_15">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[out_TransactionItem is Nothing]" sap:VirtualizedContainerService.HintSize="524.8,1783.2" sap2010:WorkflowViewState.IdRef="If_3">
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,463.2" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="433.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage" xml:space="preserve">[string.Format("Transaction item not  found, in_TransactionNumber: {0}", in_TransactionNumber)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <Assign sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_9">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="ui:QueueItem">[out_TransactionItem]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="ui:QueueItem">[Nothing]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Throw Exception="[New System.Exception(&quot;Queue is empty.&quot;)]" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="491.2,1158.4" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="457.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[string.Format("Transaction item found, in_TransactionNumber: {0}", in_TransactionNumber)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="457.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[string.Format("Updating InProgress status to 'Remittance List Item', ID - '{0}'", out_TransactionItem.SpecificContent("Remittance Item ID").ToString)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="457.6,579.2" sap2010:WorkflowViewState.IdRef="RetryScope_3" NumberOfRetries="[CInt(in_Config(&quot;MaxRetryCount&quot;))]" RetryInterval="[TimeSpan.FromSeconds(CInt(in_Config(&quot;RetryInterval&quot;).ToString()))]">
+                    <ui:RetryScope.ActivityBody>
+                      <ActivityAction>
+                        <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="416,371.2" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <umas:UpdateListItemConnections x:TypeArguments="sd1:DataRow29" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" DataRow="{x:Null}" ListNameOrId="{x:Null}" SiteUrl="{x:Null}" AuthScopesInvalid="False" BrowserListFriendlyName="Remittance Tracking List" BrowserListId="da38d49a-2ba0-46a8-a489-0be0986cfabf" BrowserSiteUrl="fambrandsllc.sharepoint.com,82e2bc74-f50c-46c9-8739-724fdf158658,4e899f91-a492-4584-a92b-6fb0d3048e54" ConnectionId="70561a49-dff9-438c-b574-21d11cd8d904" DisplayName="Update Single List Item" sap:VirtualizedContainerService.HintSize="382.4,311.2" sap2010:WorkflowViewState.IdRef="UpdateListItemConnections`1_3" ItemId="[out_TransactionItem.SpecificContent(&quot;Remittance Item ID&quot;).ToString]" ItemSelectionMode="Browse" Result="[out_RemittanceListReference]" UseConnectionService="True">
+                            <umas:UpdateListItemConnections.AllColumns>
+                              <x:Array Type="umsm:Office365SharepointListColumnSlim">
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="ID" Guid="1d22ea11-1e32-424e-89ab-9fedbadb6ce1" Hidden="False" IsRequired="False" Name="ID" ReadOnly="True" Type="DefaultValue">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="13" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Title" Guid="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Hidden="False" IsRequired="False" Name="Title" ReadOnly="False" Type="Text">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value=" 09/02/2025" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="TransactionDate" Guid="82642ec8-ef9b-478f-acf9-31f7d45fbc31" Hidden="False" IsRequired="False" Name="LinkTitle" ReadOnly="True" Type="DefaultValue">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value=" 09/02/2025" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Compliance Asset Id" Guid="3a6b296c-3f50-445c-a13f-9c679ea9dda3" Hidden="False" IsRequired="False" Name="ComplianceAssetId" ReadOnly="True" Type="Text">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="{x:Null}" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Amount" Guid="c485f29b-549d-4e65-a548-157b8e26ef2d" Hidden="False" IsRequired="False" Name="Amount" ReadOnly="False" Type="Text">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="$1,066,768.99" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="CompanyName" Guid="7ee12481-e98b-4ae1-a8ec-c298432b133e" Hidden="False" IsRequired="False" Name="CompanyName" ReadOnly="False" Type="Text">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="Costco Wholesale Canada W." />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Country" Guid="631e2cf7-5970-42cb-9f22-ea7cfb40e45d" Hidden="False" IsRequired="False" Name="Country" ReadOnly="False" Type="Text">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="Canada" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Attachment" Guid="61940980-defe-4487-86a4-380b4eb8223e" Hidden="False" IsRequired="False" Name="Attachment" ReadOnly="False" Type="Text">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="https://fambrandsllc.sharepoint.com/sites/COSTCORemittance/Remittance%20Library/Remittance%20File/SinglePointReport09022025.pdf" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Status" Guid="242a6833-5f72-41a4-89c9-dff3a0c1322c" Hidden="False" IsRequired="False" Name="Status" ReadOnly="False" Type="Text">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="{x:Null}" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Content Type" Guid="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Hidden="False" IsRequired="False" Name="ContentType" ReadOnly="False" Type="DefaultValue">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="Item" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Modified" Guid="28cf69c5-fa48-462a-b5cd-27b6f9d2bd5f" Hidden="False" IsRequired="False" Name="Modified" ReadOnly="True" Type="DateTime">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="09/03/2025 16:08:13" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Created" Guid="8c06beca-0777-48f7-91c7-6da68bc07b69" Hidden="False" IsRequired="False" Name="Created" ReadOnly="True" Type="DateTime">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="09/03/2025 16:08:10" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" DisplayName="Created By" Guid="1df5e554-ec7e-46a6-901d-d85a3881cb18" Hidden="False" IsRequired="False" LookupListId="__PERSON_OR_GROUP__" Name="Author" ReadOnly="True" Type="PersonOrGroup">
+                                  <umsm:Office365SharepointListColumnSlim.PersonOrGroup>
+                                    <umsmc:PersonOrGroupColumnMetadata ChooseFromType="peopleAndGroups" MultiSelect="False" />
+                                  </umsm:Office365SharepointListColumnSlim.PersonOrGroup>
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="Fambrands Bot2" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" DisplayName="Modified By" Guid="d31655d1-1d5b-4511-95a1-7a09e9b75bf2" Hidden="False" IsRequired="False" LookupListId="__PERSON_OR_GROUP__" Name="Editor" ReadOnly="True" Type="PersonOrGroup">
+                                  <umsm:Office365SharepointListColumnSlim.PersonOrGroup>
+                                    <umsmc:PersonOrGroupColumnMetadata ChooseFromType="peopleAndGroups" MultiSelect="False" />
+                                  </umsm:Office365SharepointListColumnSlim.PersonOrGroup>
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="Fambrands Bot2" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Attachments" Guid="67df98f4-9dec-48ff-a553-29bece9c5bf4" Hidden="False" IsRequired="False" Name="Attachments" ReadOnly="False" Type="DefaultValue">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="False" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Edit" Guid="503f1caa-358e-4918-9094-4a2cdc4bc034" Hidden="False" IsRequired="False" Name="Edit" ReadOnly="True" Type="DefaultValue">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Title" Guid="bc91a437-52e7-49e1-8c4e-4698904b2b6d" Hidden="False" IsRequired="False" Name="LinkTitleNoMenu" ReadOnly="True" Type="DefaultValue">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value=" 09/02/2025" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" LookupColumn="{x:Null}" LookupListId="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Type" Guid="081c6e4c-5c14-4f20-b23e-1a71ceb6a67c" Hidden="False" IsRequired="False" Name="DocIcon" ReadOnly="True" Type="DefaultValue">
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="{x:Null}" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Item Child Count" Guid="b824e17e-a1b3-426e-aecf-f0184d900485" Hidden="False" IsRequired="False" LookupListId="" Name="ItemChildCount" ReadOnly="True" Type="Lookup">
+                                  <umsm:Office365SharepointListColumnSlim.LookupColumn>
+                                    <umsmc:LookupColumnMetadata ColumnName="ItemChildCount" MultiSelect="False" />
+                                  </umsm:Office365SharepointListColumnSlim.LookupColumn>
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="0" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="Folder Child Count" Guid="960ff01f-2b6d-4f1b-9c3f-e19ad8927341" Hidden="False" IsRequired="False" LookupListId="" Name="FolderChildCount" ReadOnly="True" Type="Lookup">
+                                  <umsm:Office365SharepointListColumnSlim.LookupColumn>
+                                    <umsmc:LookupColumnMetadata ColumnName="FolderChildCount" MultiSelect="False" />
+                                  </umsm:Office365SharepointListColumnSlim.LookupColumn>
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="0" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="App Created By" Guid="6bfaba20-36bf-44b5-a1b2-eb6346d49716" Hidden="False" IsRequired="False" LookupListId="AppPrincipals" Name="AppAuthor" ReadOnly="True" Type="Lookup">
+                                  <umsm:Office365SharepointListColumnSlim.LookupColumn>
+                                    <umsmc:LookupColumnMetadata ColumnName="Title" MultiSelect="False" />
+                                  </umsm:Office365SharepointListColumnSlim.LookupColumn>
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="UiPath for OneDrive and SharePoint" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                                <umsm:Office365SharepointListColumnSlim Choice="{x:Null}" ColumnGroup="{x:Null}" PersonOrGroup="{x:Null}" DisplayName="App Modified By" Guid="e08400f3-c779-4ed2-a18c-ab7f34caa318" Hidden="False" IsRequired="False" LookupListId="AppPrincipals" Name="AppEditor" ReadOnly="True" Type="Lookup">
+                                  <umsm:Office365SharepointListColumnSlim.LookupColumn>
+                                    <umsmc:LookupColumnMetadata ColumnName="Title" MultiSelect="False" />
+                                  </umsm:Office365SharepointListColumnSlim.LookupColumn>
+                                  <umsm:Office365SharepointListColumnSlim.Sample>
+                                    <umsm:ColumnSample Value="UiPath for OneDrive and SharePoint" />
+                                  </umsm:Office365SharepointListColumnSlim.Sample>
+                                </umsm:Office365SharepointListColumnSlim>
+                              </x:Array>
+                            </umas:UpdateListItemConnections.AllColumns>
+                            <umas:UpdateListItemConnections.ListArgument>
+                              <umasm:ListArgument Backup="{x:Reference __ReferenceID0}" ConnectionDescriptor="{x:Null}" ManualEntryListNameOrId="{x:Null}" ManualEntrySiteUrl="{x:Null}" BrowserListFriendlyName="Remittance Tracking List" BrowserListId="da38d49a-2ba0-46a8-a489-0be0986cfabf" BrowserSiteUrl="fambrandsllc.sharepoint.com,82e2bc74-f50c-46c9-8739-724fdf158658,4e899f91-a492-4584-a92b-6fb0d3048e54" ConnectionKey="70561a49-dff9-438c-b574-21d11cd8d904" ItemSelectionMode="Browse" />
+                            </umas:UpdateListItemConnections.ListArgument>
+                            <umas:UpdateListItemConnections.ListItemBackup>
+                              <usau:BackupSlot x:TypeArguments="umase:ItemSelectionMode" x:Name="__ReferenceID0" StoredValue="Browse">
+                                <usau:BackupSlot.BackupValues>
+                                  <scg:Dictionary x:TypeArguments="umase:ItemSelectionMode, scg:List(x:Object)" />
+                                </usau:BackupSlot.BackupValues>
+                              </usau:BackupSlot>
+                            </umas:UpdateListItemConnections.ListItemBackup>
+                            <umas:UpdateListItemConnections.State>
+                              <umas:ActivityState>
+                                <umas:ActivityState.SelectedFields>
+                                  <scg:List x:TypeArguments="umas:DynamicField" Capacity="1">
+                                    <umas:DynamicField Id="242a6833-5f72-41a4-89c9-dff3a0c1322c" Name="Status">
+                                      <umas:DynamicField.ArgumentValue>
+                                        <InArgument x:TypeArguments="x:String">[in_Config("StatusProgressState").ToString]</InArgument>
+                                      </umas:DynamicField.ArgumentValue>
+                                    </umas:DynamicField>
+                                  </scg:List>
+                                </umas:ActivityState.SelectedFields>
+                              </umas:ActivityState>
+                            </umas:UpdateListItemConnections.State>
+                          </umas:UpdateListItemConnections>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:RetryScope.ActivityBody>
+                    <ui:RetryScope.Condition>
+                      <ActivityFunc x:TypeArguments="x:Boolean" />
+                    </ui:RetryScope.Condition>
+                  </ui:RetryScope>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="457.6,167.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[string.Format("Updated status to list item, ID - '{0}'", out_TransactionItem.SpecificContent("Remittance Item ID").ToString)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+          <If sap2010:Annotation.AnnotationText="This optional step can be used to include more information about a transaction item and it is used mainly for logging and visualization purposes.&#xA;For example, if transaction items are invoices, then out_TransactionID can be the invoice number, out_TransactionField1 can be the invoice date and out_TransactionField2 can be the invoice amount." Condition="[out_TransactionItem isNot Nothing]" DisplayName="If a new transaction item is retrieved, get additional information about it" sap:VirtualizedContainerService.HintSize="558.4,284" sap2010:WorkflowViewState.IdRef="If_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap2010:Annotation.AnnotationText="Write data to the added log fields that identify the transaction." DisplayName="Add transaction information to log fields" sap:VirtualizedContainerService.HintSize="467.2,423.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign DisplayName="Assign out_TransactionID" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_5">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[out_TransactionID]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[now.ToString]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="Assign out_TransactionField1" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_6">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[out_TransactionField1]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[string.Empty]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="Assign out_TransactionField2" sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_7">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[out_TransactionField2]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[string.Empty]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Sequence>
+            </If.Else>
+          </If>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="571.2,23.2" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence sap:VirtualizedContainerService.HintSize="416,282.4" sap2010:WorkflowViewState.IdRef="Sequence_14">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:LogMessage DisplayName="Log Message Get transaction item faulted" sap:VirtualizedContainerService.HintSize="382.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Warn" Message="[&quot;Could not retrieve transaction item. Exception message: &quot;+exception.Message]" />
+              <Rethrow DisplayName="Rethrow Get transaction item faulted" sap:VirtualizedContainerService.HintSize="382.4,48" sap2010:WorkflowViewState.IdRef="Rethrow_2" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>
