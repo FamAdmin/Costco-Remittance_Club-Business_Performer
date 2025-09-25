@@ -1,0 +1,263 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="BatchProcessing" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upau="clr-namespace:UiPath.Persistence.Activities.UserAction;assembly=UiPath.Persistence.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_BusinessDropdownConfig" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_OrchestratorFolderPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_AuditLogFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_RemittanceFileName" Type="InArgument(x:String)" />
+    <x:Property Name="out_ListOfCreateAppTask" Type="OutArgument(scg:List(upau:UserActionData))" />
+    <x:Property Name="in_dt_UnidentifiedChargeType" Type="InArgument(sd:DataTable)" />
+  </x:Members>
+  <this:BatchProcessing.in_Config>
+    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" />
+  </this:BatchProcessing.in_Config>
+  <this:BatchProcessing.in_BusinessDropdownConfig>
+    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" />
+  </this:BatchProcessing.in_BusinessDropdownConfig>
+  <this:BatchProcessing.in_OrchestratorFolderPath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:BatchProcessing.in_OrchestratorFolderPath>
+  <this:BatchProcessing.in_AuditLogFilePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:BatchProcessing.in_AuditLogFilePath>
+  <this:BatchProcessing.in_RemittanceFileName>
+    <InArgument x:TypeArguments="x:String" />
+  </this:BatchProcessing.in_RemittanceFileName>
+  <this:BatchProcessing.in_dt_UnidentifiedChargeType>
+    <InArgument x:TypeArguments="sd:DataTable" />
+  </this:BatchProcessing.in_dt_UnidentifiedChargeType>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>BatchProcessing_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.Persistence.Activities.UserAction</x:String>
+      <x:String>UiPath.Persistence.Activities.Model.Task</x:String>
+      <x:String>UiPath.Persistence.Activities.UserAction</x:String>
+      <x:String>UiPath.Persistence.Activities.Model.Task</x:String>
+      <x:String>UiPath.Persistence.Activities</x:String>
+      <x:String>UiPath</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Numerics</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>UiPath.Persistence.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Interop</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Api</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities.Api</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow19</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow18</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow12</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow10</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow9</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow11</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow25</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow17</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow22</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow27</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow14</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow1</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow3</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable4</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable21</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable7</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow8</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow28</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow2</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow6</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow26</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow15</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow24</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow20</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow16</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow13</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow23</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable5</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>Costco-Remittance_Club-Business_Performer.Core</AssemblyReference>
+      <AssemblyReference>Costco-Remittance_Club-Business_Performer.Core</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="BatchProcessing" sap:VirtualizedContainerService.HintSize="1452.0000000000002,1627.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="upau:UserActionData" Name="CreatedAppTask" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence sap2010:Annotation.AnnotationText="This code help to create batches (MaxThresholdRows) based on user input  and generates Action Center tasks accordingly." DisplayName="Batch Processing" sap:VirtualizedContainerService.HintSize="516.8,1604" sap2010:WorkflowViewState.IdRef="Sequence_4">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign DisplayName="Assign - out_ListOfCreateAppTask" sap:VirtualizedContainerService.HintSize="483.2,113.6" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign.To>
+          <OutArgument x:TypeArguments="scg:List(upau:UserActionData)">[out_ListOfCreateAppTask]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="scg:List(upau:UserActionData)">[New List(of UserActionData)]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Sequence DisplayName="Sequence - Get Action center batches" sap:VirtualizedContainerService.HintSize="483.2,1363.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="scg:List(sd:DataTable)" Name="Batches" />
+          <Variable x:TypeArguments="x:Int32" Name="CurrentBatchNumber" />
+        </Sequence.Variables>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Creating batches according to the specified input threshold." DisplayName="GetActionCenterBatches - Invoke Workflow File (Framework\Utilities\GetActionCenterBatches.cs)" sap:VirtualizedContainerService.HintSize="449.6,220" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\Utilities\GetActionCenterBatches.cs">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="sd:DataTable" x:Key="fullData">[in_dt_UnidentifiedChargeType]</InArgument>
+            <InArgument x:TypeArguments="x:Int32" x:Key="batchRows">[CInt(in_Config("MaxThresholdRows"))]</InArgument>
+            <OutArgument x:TypeArguments="scg:List(sd:DataTable)" x:Key="Output">[Batches]</OutArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:InvokeWorkflowFile>
+        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="449.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Batches splitted in {0} batches", Batches.Count)]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+        <ui:ForEach x:TypeArguments="sd:DataTable" CurrentIndex="[CurrentBatchNumber]" DisplayName="For Each - Batches Iteration" sap:VirtualizedContainerService.HintSize="449.6,884" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Batches]">
+          <ui:ForEach.Body>
+            <ActivityAction x:TypeArguments="sd:DataTable">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="sd:DataTable" Name="currentDataTable" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,746.4" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="382.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                  <ui:InvokeWorkflowFile.Arguments>
+                    <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Creating action task for batch - {0}", CurrentBatchNumber+1)]</InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                  </ui:InvokeWorkflowFile.Arguments>
+                </ui:InvokeWorkflowFile>
+                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="CreateActionCenterAppTask - Invoke Workflow File (Framework\ActionCenter\CreateActionCenterAppTask.xaml)" sap:VirtualizedContainerService.HintSize="382.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\ActionCenter\CreateActionCenterAppTask.xaml">
+                  <ui:InvokeWorkflowFile.Arguments>
+                    <InArgument x:TypeArguments="sd:DataTable" x:Key="in_BusinessRuleExceptionData">[currentDataTable]</InArgument>
+                    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_OrchestratorFolderPath">[in_OrchestratorFolderPath]</InArgument>
+                    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_BusinessDropdownConfig">[in_BusinessDropdownConfig]</InArgument>
+                    <OutArgument x:TypeArguments="upau:UserActionData" x:Key="out_CreateAppTask">[CreatedAppTask]</OutArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_AuditLogFilePath">[in_AuditLogFilePath]</InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_RemittanceFileName">[in_RemittanceFileName]</InArgument>
+                    <InArgument x:TypeArguments="x:Int32" x:Key="in_CurrentBatchNumber">[CurrentBatchNumber]</InArgument>
+                  </ui:InvokeWorkflowFile.Arguments>
+                </ui:InvokeWorkflowFile>
+                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="382.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                  <ui:InvokeWorkflowFile.Arguments>
+                    <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Created action task for batch - {0}", CurrentBatchNumber+1)]</InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                  </ui:InvokeWorkflowFile.Arguments>
+                </ui:InvokeWorkflowFile>
+                <InvokeMethod DisplayName="Invoke Method" sap:VirtualizedContainerService.HintSize="382.4,158.4" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="scg:List(upau:UserActionData)">[out_ListOfCreateAppTask]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="upau:UserActionData">[CreatedAppTask]</InArgument>
+                </InvokeMethod>
+              </Sequence>
+            </ActivityAction>
+          </ui:ForEach.Body>
+        </ui:ForEach>
+      </Sequence>
+    </Sequence>
+  </Sequence>
+</Activity>

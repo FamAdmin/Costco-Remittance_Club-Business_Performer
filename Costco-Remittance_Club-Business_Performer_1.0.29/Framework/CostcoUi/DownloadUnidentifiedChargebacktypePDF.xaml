@@ -1,0 +1,770 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="UnidentifiedChargebleType" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:sd1="clr-namespace:System.Data;assembly=Studio.Generated.TypedDataRow14" xmlns:si="clr-namespace:System.IO;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:umfm="clr-namespace:UiPath.MicrosoftOffice365.Files.Models;assembly=UiPath.MicrosoftOffice365" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_ConfigUncharegeabeType" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="In_BusinessCnfigUT" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_CurrentDate" Type="InArgument(x:String)" />
+    <x:Property Name="in_ProceesNameUnidentify" Type="InArgument(x:String)" />
+    <x:Property Name="in_RootFolderUnidentify" Type="InArgument(x:String)" />
+    <x:Property Name="in_PdfCountryName" Type="InArgument(x:String)" />
+    <x:Property Name="in_BusinessConfigFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_GstReceviblePaymentFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_AllCostcoFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_DownloadCsvPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_TechnicalConfigFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_OrderReportPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_InputFolderPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_OutputFolderPath" Type="InArgument(x:String)" />
+    <x:Property Name="out_dt_UnidentifiedChargeType" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_EmptyRowIndexMap" Type="OutArgument(scg:Dictionary(x:String, scg:Queue(x:Int32)))" />
+    <x:Property Name="out_LastRowNumberCostco" Type="OutArgument(x:Int32)" />
+    <x:Property Name="out_UploadedAllCostcoWorkbookUrl" Type="OutArgument(x:String)" />
+    <x:Property Name="out_BusinessRuleApplied" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_SharepointReferenceId" Type="OutArgument(scg:Dictionary(x:String, scg:Queue(x:Object)))" />
+    <x:Property Name="in_AuditLogFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_CurrentStateError" Type="InArgument(x:String)" />
+    <x:Property Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
+  </x:Members>
+  <this:UnidentifiedChargebleType.in_PdfCountryName>
+    <InArgument x:TypeArguments="x:String" />
+  </this:UnidentifiedChargebleType.in_PdfCountryName>
+  <this:UnidentifiedChargebleType.in_GstReceviblePaymentFilePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:UnidentifiedChargebleType.in_GstReceviblePaymentFilePath>
+  <this:UnidentifiedChargebleType.in_AllCostcoFilePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:UnidentifiedChargebleType.in_AllCostcoFilePath>
+  <this:UnidentifiedChargebleType.in_DownloadCsvPath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:UnidentifiedChargebleType.in_DownloadCsvPath>
+  <this:UnidentifiedChargebleType.in_TechnicalConfigFilePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:UnidentifiedChargebleType.in_TechnicalConfigFilePath>
+  <this:UnidentifiedChargebleType.in_OutputFolderPath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:UnidentifiedChargebleType.in_OutputFolderPath>
+  <this:UnidentifiedChargebleType.in_AuditLogFilePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:UnidentifiedChargebleType.in_AuditLogFilePath>
+  <this:UnidentifiedChargebleType.in_CurrentStateError>
+    <InArgument x:TypeArguments="x:String" />
+  </this:UnidentifiedChargebleType.in_CurrentStateError>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>UnidentifiedChargebleType_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Models</x:String>
+      <x:String>UiPath.UIAutomationNext.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Models.CV</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Services.RuntimeAnalyze</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.CSV</x:String>
+      <x:String>UiPath.CSV.Activities</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>UiPath.Platform.SyncObjects</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.Numerics</x:String>
+      <x:String>UiPath.Activities.System.FileOperations</x:String>
+      <x:String>UiPath.Platform</x:String>
+      <x:String>UiPath.UIAutomationNext.Triggers</x:String>
+      <x:String>UiPath.Platform.Triggers</x:String>
+      <x:String>UiPath.Platform.Triggers.Scope</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Triggers</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Sharepoint</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Sharepoint.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Sharepoint.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Sharepoint.Enums</x:String>
+      <x:String>UiPath.Shared.Activities.Utils</x:String>
+      <x:String>UiPath.Shared.Activities.ConnectionService.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Sharepoint.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Files.Enums</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Enums</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Files.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Files.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Files</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Files.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>UiPath.CodedWorkflows</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow3</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow10</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow9</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow1</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable4</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable7</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow8</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow2</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow6</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable5</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow11</AssemblyReference>
+      <AssemblyReference>System.CodeDom</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Forms</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow12</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow13</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow14</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow15</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow18</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow17</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow16</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.Packaging</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow19</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.ViewModels</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow25</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow22</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow27</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable21</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow28</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow26</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow24</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow20</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow23</AssemblyReference>
+      <AssemblyReference>Costco-Remittance_Club-Business_Performer.Core</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="UnidentifiedChargebleType" sap:VirtualizedContainerService.HintSize="1452.0000000000002,9238.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="s:String[]" Name="Arr" />
+      <Variable x:TypeArguments="x:String" Name="FilePath" />
+      <Variable x:TypeArguments="sd:DataTable" Name="Dt" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="1259.2,9215.2" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <TryCatch.Try>
+        <Sequence sap2010:Annotation.AnnotationText="This workflow identifies rows marked with an unidentified chargeback type and downloads the corresponding PDF documents from the Costco Portal for further review or manual processing.&#xA;" DisplayName="Downloading Unidentified Chargeback type PDF" sap:VirtualizedContainerService.HintSize="1222.4,8937.6" sap2010:WorkflowViewState.IdRef="Sequence_41">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessCSVAndApplyBusinessRules - Invoke Workflow File (Framework\ApplyBusinessRule\ProcessCSVAndApplyBusinessRules.xaml)" sap:VirtualizedContainerService.HintSize="1188.8,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Framework\BusinessRules\ProcessCSVAndApplyBusinessRules.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="in_BusinessConfigPath">[LocalResource.FromPath(in_BusinessConfigFilePath).LocalPath]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_DownloadCsvPath">[LocalResource.FromPath(in_DownloadCsvPath).LocalPath]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_TechnicalConfigPath">[LocalResource.FromPath(in_TechnicalConfigFilePath).LocalPath]</InArgument>
+              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_ConfigUncharegeabeType]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_PaymentDate">[in_TransactionItem.SpecificContent("Transaction Date").ToString]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_GstPaybleWorkbookPath">[LocalResource.FromPath(in_GstReceviblePaymentFilePath).LocalPath]</InArgument>
+              <InArgument x:TypeArguments="x:Int32" x:Key="in_GstSheetStartYear">[Now.Year]</InArgument>
+              <InArgument x:TypeArguments="x:Int32" x:Key="in_GstSheetStartMonth">[Now.Month]</InArgument>
+              <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Int32))" x:Key="out_EmptyRowsIndexMap">[out_EmptyRowIndexMap]</OutArgument>
+              <OutArgument x:TypeArguments="x:Int32" x:Key="out_AllCostcoLastRowNumber">[out_LastRowNumberCostco]</OutArgument>
+              <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_EmptyData">[out_dt_UnidentifiedChargeType]</OutArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_PdfCountryName">[in_PdfCountryName]</InArgument>
+              <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_BusinessRuleAppliedData">[out_BusinessRuleApplied]</OutArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_OrderReportWorkbookPath">[LocalResource.FromPath(in_OrderReportPath).LocalPath]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_AllCostcoWorkbookPath">[LocalResource.FromPath(in_AllCostcoFilePath).LocalPath]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_InputFolderPath">[in_InputFolderPath]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_OutputFolderPath">[in_OutputFolderPath]</InArgument>
+              <OutArgument x:TypeArguments="x:String" x:Key="out_UploadedAllCostcoWorkbookUrl">[out_UploadedAllCostcoWorkbookUrl]</OutArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_AuditLogFilePath">[in_AuditLogFilePath]</InArgument>
+              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_GeneralBusinessConfig">[In_BusinessCnfigUT]</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <uix:NApplicationCard AttachMode="ByInstance" CloseMode="Always" DisplayName="Chrome Vendor Accounting Portal " sap:VirtualizedContainerService.HintSize="1188.8,8490.4" sap2010:WorkflowViewState.IdRef="NApplicationCard_2" InteractionMode="DebuggerApi" ScopeGuid="29b0a399-d81f-483c-b928-686f4b2ef0c1" Version="V2" WindowResize="Maximize">
+            <uix:NApplicationCard.Body>
+              <ActivityAction x:TypeArguments="x:Object">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1155.2,8201.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1121.6,176" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Navigating to existing costco portal page&quot;]" />
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="1121.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">Navigating to existing costco portal page</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <uix:NClick ActivateBefore="True" ClickType="Single" DelayBefore="5" DisplayName="Click 'Payments'" sap:VirtualizedContainerService.HintSize="1121.6,225.6" sap2010:WorkflowViewState.IdRef="NClick_13" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Version="V4">
+                    <uix:NClick.Target>
+                      <uix:TargetAnchorable BrowserURL="apvendor.costco.com/vp/index.html" CVScreenId="18bd202b-5206-41dd-813b-0b61068ce467" ContentHash="AVRYGUpBKUqFlUA3SZs9nw" DesignTimeRectangle="124, 170, 94, 83" DesignTimeScaleFactor="1.25" ElementType="Button" FullSelectorArgument="&lt;webctrl ui5-tooltip='Payments' /&gt;" Guid="35a63662-ae6f-457d-9d5b-801d6a22294c" InformativeScreenshot="c4408bccafbe813794cf3d048bc5fcae.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/zP8sA9I68ket-CA_BSN1Xg" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Vendor Accounting Portal － About You' /&gt;" SearchSteps="Selector" Version="V4" Visibility="Interactive" />
+                    </uix:NClick.Target>
+                    <uix:NClick.VerifyOptions>
+                      <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                        <uix:VerifyExecutionOptions.Retry>
+                          <InArgument x:TypeArguments="x:Boolean" />
+                        </uix:VerifyExecutionOptions.Retry>
+                        <uix:VerifyExecutionOptions.Timeout>
+                          <InArgument x:TypeArguments="x:Double" />
+                        </uix:VerifyExecutionOptions.Timeout>
+                      </uix:VerifyExecutionOptions>
+                    </uix:NClick.VerifyOptions>
+                  </uix:NClick>
+                  <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'Payment History'" sap:VirtualizedContainerService.HintSize="1121.6,225.6" sap2010:WorkflowViewState.IdRef="NClick_14" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Version="V4">
+                    <uix:NClick.Target>
+                      <uix:TargetAnchorable BrowserURL="apvendor.costco.com/vp/index.html" CVScreenId="527cec0e-f8fb-4cdd-bbbf-784146c3ce5a" ContentHash="PkxwDFKXFUumF8BrNdDAtA" DesignTimeRectangle="9, 295, 148, 36" DesignTimeScaleFactor="1.25" ElementType="Button" FullSelectorArgument="&lt;webctrl ui5-role='button' ui5p-text='Payment History' /&gt;" Guid="a275295e-a5fe-4c14-ae1e-ea3bdae3366d" InformativeScreenshot="4f2d8f93bcff3f2d464265840e767827.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/VyfQRVhoBE6jtXbW2LcUJA" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Vendor Accounting Portal － Payment History' /&gt;" SearchSteps="Selector" Version="V4" Visibility="Interactive" />
+                    </uix:NClick.Target>
+                    <uix:NClick.VerifyOptions>
+                      <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                        <uix:VerifyExecutionOptions.Retry>
+                          <InArgument x:TypeArguments="x:Boolean" />
+                        </uix:VerifyExecutionOptions.Retry>
+                        <uix:VerifyExecutionOptions.Timeout>
+                          <InArgument x:TypeArguments="x:Double" />
+                        </uix:VerifyExecutionOptions.Timeout>
+                      </uix:VerifyExecutionOptions>
+                    </uix:NClick.VerifyOptions>
+                  </uix:NClick>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1121.6,176" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Clicked on payment history&quot;]" />
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="1121.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">Clicked on payment history</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <uix:NSelectItem DisplayName="Select Item '▼Invoice No.'" sap:VirtualizedContainerService.HintSize="1121.6,189.6" sap2010:WorkflowViewState.IdRef="NSelectItem_2" Item="[in_ConfigUncharegeabeType(&quot;PaymentHistoryDropDownValue&quot;).ToString]" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Version="V4">
+                    <uix:NSelectItem.Items>
+                      <scg:List x:TypeArguments="x:String" Capacity="2">
+                        <x:String>PO No.</x:String>
+                        <x:String>Invoice No.</x:String>
+                      </scg:List>
+                    </uix:NSelectItem.Items>
+                    <uix:NSelectItem.Target>
+                      <uix:TargetAnchorable BrowserURL="apvendor.costco.com/vp/index.html" CVScreenId="eafe4b48-3978-4ad2-9059-7bd36a91a3a9" ContentHash="NUOQZiYG20ifu_I_7cqDTw" DesignTimeRectangle="1515, 351, 125, 31" DesignTimeScaleFactor="1.25" ElementType="DropDown" FullSelectorArgument="&lt;webctrl ui5-label='Filter Dropdown' idx='2' /&gt;" Guid="2efc1c27-7d33-458b-bd30-068e117ebd96" InformativeScreenshot="71ba02a6fdf1e8d1299b33813a5a8271.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/BHfmbM3JekOZiEMUYZ_3Zg" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Vendor Accounting Portal － Payment History' /&gt;" SearchSteps="Selector" Version="V4" Visibility="Interactive" />
+                    </uix:NSelectItem.Target>
+                  </uix:NSelectItem>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1121.6,176" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Trace" Message="[String.Format(&quot;Selected {0} option&quot;,in_ConfigUncharegeabeType(&quot;PaymentHistoryDropDownValue&quot;).ToString)]" />
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="1121.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">[String.Format("Selected {0} option",in_ConfigUncharegeabeType("PaymentHistoryDropDownValue").ToString)]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[out_dt_UnidentifiedChargeType]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1121.6,6443.2" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+                    <ui:ForEachRow.Body>
+                      <ActivityAction x:TypeArguments="sd:DataRow">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="1088,6252.8" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If Condition="[Not String.IsNullOrEmpty(CurrentRow(in_ConfigUncharegeabeType(&quot;BusinessChargebackTypeSheetName&quot;).ToString()).ToString().Trim())]" sap:VirtualizedContainerService.HintSize="1054.4,368" sap2010:WorkflowViewState.IdRef="If_1">
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,108" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:Continue sap:VirtualizedContainerService.HintSize="382.4,48" sap2010:WorkflowViewState.IdRef="Continue_1" />
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                          <uix:NTypeInto ActivateBefore="True" sap2010:Annotation.AnnotationText="Searching for the unidentified chargeback type invoice number" ClickBeforeMode="Single" DisplayName="Type Into - Unidentified chargeback type Invoice Number" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="1054.4,330.4" sap2010:WorkflowViewState.IdRef="NTypeInto_6" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Text="[CurrentRow(in_ConfigUncharegeabeType(&quot;EmptyTableIndexMapKeyName&quot;).ToString()).ToString()]" Version="V4">
+                            <uix:NTypeInto.Target>
+                              <uix:TargetAnchorable BrowserURL="apvendor.costco.com/vp/index.html" CVScreenId="b102f857-ca96-48ec-9be5-aa0278adfb29" ContentHash="i9BB1A8NiEO397ztsu1JgQ" DesignTimeRectangle="1176, 351, 338, 31" DesignTimeScaleFactor="1.25" ElementType="InputBox" FullSelectorArgument="&lt;webctrl ui5-label='Search' /&gt;" Guid="364d1921-e501-4a36-9d20-57a22393998f" InformativeScreenshot="aee4f336bf344c36574b339339a4880e.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/5wCFhqejG0qsvXYU9Z5yzA" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Vendor Accounting Portal － Payment History' /&gt;" SearchSteps="Selector" Version="V4" Visibility="Interactive" />
+                            </uix:NTypeInto.Target>
+                            <uix:NTypeInto.VerifyOptions>
+                              <uix:VerifyExecutionTypeIntoOptions DisplayName="{x:Null}" Mode="Appears">
+                                <uix:VerifyExecutionTypeIntoOptions.Retry>
+                                  <InArgument x:TypeArguments="x:Boolean" />
+                                </uix:VerifyExecutionTypeIntoOptions.Retry>
+                                <uix:VerifyExecutionTypeIntoOptions.Timeout>
+                                  <InArgument x:TypeArguments="x:Double" />
+                                </uix:VerifyExecutionTypeIntoOptions.Timeout>
+                              </uix:VerifyExecutionTypeIntoOptions>
+                            </uix:NTypeInto.VerifyOptions>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </uix:NTypeInto>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1054.4,176" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[String.Format(&quot;Successfully typed Invoice No. '{0}' in the search bar&quot;, CurrentRow(in_ConfigUncharegeabeType(&quot;EmptyTableIndexMapKeyName&quot;).ToString()).ToString())]" />
+                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="1054.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">[String.Format("Successfully typed Invoice No. '{0}' in the search bar", CurrentRow(in_ConfigUncharegeabeType("EmptyTableIndexMapKeyName").ToString()).ToString())]</InArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                          <uix:NClick ActivateBefore="True" ClickType="Single" DelayBefore="5" DisplayName="Click 'Search'" sap:VirtualizedContainerService.HintSize="1054.4,225.6" sap2010:WorkflowViewState.IdRef="NClick_22" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Version="V4">
+                            <uix:NClick.Target>
+                              <uix:TargetAnchorable BrowserURL="apvendor.costco.com/vp/index.html" CVScreenId="b102f857-ca96-48ec-9be5-aa0278adfb29" ContentHash="NSorqyVp_U2iQFQrrgCdpg" DesignTimeRectangle="1648, 351, 122, 31" DesignTimeScaleFactor="1.25" ElementType="Button" FullSelectorArgument="&lt;webctrl ui5-role='button' ui5p-text='Search' /&gt;" Guid="c2fa08f7-a308-4c45-9cc7-62a6c0902854" InformativeScreenshot="b18a9fcd15ce970696f8125da25b1b0a.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/LwCkNVQcVkSSXQ6_-A0eKw" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Vendor Accounting Portal － Payment History' /&gt;" SearchSteps="Selector" Version="V4" Visibility="Interactive" />
+                            </uix:NClick.Target>
+                            <uix:NClick.VerifyOptions>
+                              <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                                <uix:VerifyExecutionOptions.Retry>
+                                  <InArgument x:TypeArguments="x:Boolean" />
+                                </uix:VerifyExecutionOptions.Retry>
+                                <uix:VerifyExecutionOptions.Timeout>
+                                  <InArgument x:TypeArguments="x:Double" />
+                                </uix:VerifyExecutionOptions.Timeout>
+                              </uix:VerifyExecutionOptions>
+                            </uix:NClick.VerifyOptions>
+                          </uix:NClick>
+                          <uix:NCheckState DisplayName="Check App State 'No Results Found'" sap:VirtualizedContainerService.HintSize="1054.4,4916.8" sap2010:WorkflowViewState.IdRef="NCheckState_4" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Timeout="[TimeSpan.FromSeconds(CInt(in_ConfigUncharegeabeType(&quot;Delay&quot;))).TotalSeconds]" Version="V4">
+                            <uix:NCheckState.IfExists>
+                              <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="449.6,528.8" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[string.Format(&quot;  unidentified number {0} search fail&quot;,CurrentRow(in_ConfigUncharegeabeType(&quot;EmptyTableIndexMapKeyName&quot;).ToString()).ToString())]" />
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">[string.Format("unidentified number {0} search fail",CurrentRow(in_ConfigUncharegeabeType("EmptyTableIndexMapKeyName").ToString()).ToString())]</InArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                                <Throw Exception="[new BusinessRuleException(&quot;No data found&quot;)]" sap:VirtualizedContainerService.HintSize="416,115.2" sap2010:WorkflowViewState.IdRef="Throw_5" />
+                              </Sequence>
+                            </uix:NCheckState.IfExists>
+                            <uix:NCheckState.IfNotExists>
+                              <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="552,4675.2" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                                <Sequence.Variables>
+                                  <Variable x:TypeArguments="x:String" Name="variable1" />
+                                  <Variable x:TypeArguments="umfm:O365DriveRemoteItem" Name="SharepointUploadedPdfFile" />
+                                  <Variable x:TypeArguments="si:FileInfo" Name="FileInfo" />
+                                  <Variable x:TypeArguments="sd1:DataRow14" Name="sharepointListItem" />
+                                  <Variable x:TypeArguments="si:FileInfo" Name="DownloadFileCheck" />
+                                  <Variable x:TypeArguments="ui:Window" Name="CurrentActiveWindow" />
+                                  <Variable x:TypeArguments="x:Boolean" Name="IsPdfFileExist" />
+                                </Sequence.Variables>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[String.Format(&quot;Found Invoice number - {0}&quot;, CurrentRow(in_ConfigUncharegeabeType(&quot;EmptyTableIndexMapKeyName&quot;).ToString()).ToString())]" />
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">[String.Format("Found Invoice number - {0}", CurrentRow(in_ConfigUncharegeabeType("EmptyTableIndexMapKeyName").ToString()).ToString())]</InArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                                <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'SAP.UI.COMMONS.BUTTON _…'" sap:VirtualizedContainerService.HintSize="518.4,225.6" sap2010:WorkflowViewState.IdRef="NClick_23" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Version="V4">
+                                  <uix:NClick.Target>
+                                    <uix:TargetAnchorable BrowserURL="apvendor.costco.com/vp/index.html" CVScreenId="f92b2c80-cb1b-4f25-b204-a7e84a4000b9" ContentHash="mwfW3QKAWUmyDK7e50nEGg" DesignTimeRectangle="1804, 462, 38, 27" DesignTimeScaleFactor="1.25" ElementType="Button" FullSelectorArgument="&lt;webctrl ui5-class='costco.comp.table.Table' /&gt;&lt;webctrl ui5-colLabel='-' ui5-tableRow='0' ui5-tooltip='View PDF' /&gt;" Guid="d2383af2-fac6-453a-9a96-df63e7c16f5e" InformativeScreenshot="9ec2fc361230bde19e4b89c6ae1f9874.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/roqs0r0XpUq2OQO67w6uhg" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Vendor Accounting Portal － Payment History' /&gt;" SearchSteps="Selector" Version="V4" Visibility="Interactive" />
+                                  </uix:NClick.Target>
+                                  <uix:NClick.VerifyOptions>
+                                    <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                                      <uix:VerifyExecutionOptions.Retry>
+                                        <InArgument x:TypeArguments="x:Boolean" />
+                                      </uix:VerifyExecutionOptions.Retry>
+                                      <uix:VerifyExecutionOptions.Timeout>
+                                        <InArgument x:TypeArguments="x:Double" />
+                                      </uix:VerifyExecutionOptions.Timeout>
+                                    </uix:VerifyExecutionOptions>
+                                  </uix:NClick.VerifyOptions>
+                                </uix:NClick>
+                                <uix:NClick ActivateBefore="True" ClickType="Single" DelayBefore="5" DisplayName="Click - Downloading button" sap:VirtualizedContainerService.HintSize="518.4,225.6" sap2010:WorkflowViewState.IdRef="NClick_24" InteractionMode="HardwareEvents" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Version="V4">
+                                  <uix:NClick.Target>
+                                    <uix:TargetAnchorable BrowserURL="apvendor.costco.com/sap/opu/odata/costpd/payer_direct_srv/ViewPdfSet(ViewKey='MzIwWjEwMDQgNjUxNzkzNjI4OTIwMjU@')/$value" CVScreenId="845bc4f8-f70b-41b9-b434-36e39a68c584" ContentHash="XZUPepbZ4EKGQvDgXW8TEQ" CvElementArea="1785, 139, 26, 26" CvType="Icon" DesignTimeRectangle="1786, 139, 26, 26" DesignTimeScaleFactor="1.25" FullSelectorArgument="&lt;ctrl name='$value' role='document' /&gt;&lt;ctrl name='Download' role='push button' /&gt;&lt;ctrl idx='2' role='grouping' /&gt;" FuzzySelectorArgument="&lt;ctrl name='$value' role='document' /&gt;&lt;ctrl name='Download' role='push button' /&gt;&lt;ctrl automationid='' role='grouping' /&gt;" Guid="6b0309c5-18d7-45a9-9929-038eb012d3ec" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADxSURBVEhL7ZKxDYMwEEUzmAegZAZKhETLANDAOIiegiWYACiZwNE/yYigD8aORIq4eDL2v7snAy+llP4FQfwYQfwY3uI4jnWaprKy3Ia3uK5rva6rrCy3EcS3CWJXnMRd1+miKOS5aRoRY8Ue58j39VfcFidJIiIAyV6MvclQx/qPON04z/NN0Pf9xwqQsz6G8zfOsmwT7cE5qz/D6+c6yl2lwEsMIFuWxUsKrOJhGHTbtjSLooieox59LDNYxXiV4zjS7AzUo49lBqt4nmcZghvcBfXTNNF5Bqu4qioZ5EpZlnSewfvn+pYgfox/Eyv9BnWMk7L9eAokAAAAAElFTkSuQmCC" InformativeScreenshot="056dd8f9c4052cfefab7ebff1eb6a639.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/zGccivgThE2nUfJjolvg0w" ScopeSelectorArgument="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='$value - Google Chrome' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V4" Visibility="Interactive" />
+                                  </uix:NClick.Target>
+                                  <uix:NClick.VerifyOptions>
+                                    <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                                      <uix:VerifyExecutionOptions.Retry>
+                                        <InArgument x:TypeArguments="x:Boolean" />
+                                      </uix:VerifyExecutionOptions.Retry>
+                                      <uix:VerifyExecutionOptions.Timeout>
+                                        <InArgument x:TypeArguments="x:Double" />
+                                      </uix:VerifyExecutionOptions.Timeout>
+                                    </uix:VerifyExecutionOptions>
+                                  </uix:NClick.VerifyOptions>
+                                </uix:NClick>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Clicked on download button&quot;]" />
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">Clicked on download button</InArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                                <Assign DisplayName="Assign - FilePath" sap:VirtualizedContainerService.HintSize="518.4,114.4" sap2010:WorkflowViewState.IdRef="Assign_8">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[FilePath]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[in_OutputFolderPath+"\"+CurrentRow(in_ConfigUncharegeabeType("EmptyTableIndexMapKeyName").ToString()).ToString()+"_"+in_CurrentDate]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <ui:FileExistsX DisplayName="File Exists" Exists="[IsPdfFileExist]" sap:VirtualizedContainerService.HintSize="518.4,166.4" sap2010:WorkflowViewState.IdRef="FileExistsX_1" Path="[FilePath]" />
+                                <If Condition="[IsPdfFileExist]" DisplayName="If - Checking for file exist or not" sap:VirtualizedContainerService.HintSize="518.4,424" sap2010:WorkflowViewState.IdRef="If_2">
+                                  <If.Then>
+                                    <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,164" sap2010:WorkflowViewState.IdRef="Sequence_42">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:DeleteFileX DisplayName="Delete File" sap:VirtualizedContainerService.HintSize="382.4,104" sap2010:WorkflowViewState.IdRef="DeleteFileX_1" Path="[FilePath]" />
+                                    </Sequence>
+                                  </If.Then>
+                                  <If.Else>
+                                    <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_43">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </Sequence>
+                                  </If.Else>
+                                </If>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Info" Message="[String.Format(&quot;Downloading the PDF to '{0}'&quot;, FilePath)]" />
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="True" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_22" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">[String.Format("Downloading the PDF to '{0}'", FilePath)]</InArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                                <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into 'File name'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="518.4,286.4" sap2010:WorkflowViewState.IdRef="NTypeInto_7" InteractionMode="HardwareEvents" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Text="[FilePath]" Version="V4">
+                                  <uix:NTypeInto.Target>
+                                    <uix:TargetAnchorable BrowserURL="apvendor.costco.com/sap/opu/odata/costpd/payer_direct_srv/ViewPdfSet(ViewKey='MzIwWjEwMDQgNjUxNzkzNjI4OTIwMjU@')/$value" CVScreenId="7f4aa0aa-8451-40eb-99f6-8daaad0a8c3c" ContentHash="mvaS2qwG6EGvNBfemXwApQ" CvElementArea="165, 450, 777, 29" CvType="InputBox" DesignTimeRectangle="169, 455, 752, 22" DesignTimeScaleFactor="1.25" ElementType="InputBox" FullSelectorArgument="&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;wnd aaname='File name:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;" FuzzySelectorArgument="&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;wnd aaname='File name:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;" Guid="06e577be-a912-45e2-b9f5-1a9de22df62a" InformativeScreenshot="1de0de10a98bd7aa2e1c6295dcd4e2dc.png" IsResponsive="True" Reference="BrZ-K_ynyEioGU8Gc3rEeg/CJe-Ne-1906Qt9DnZ5WJVA" ScopeSelectorArgument="&lt;wnd app='chrome.exe' cls='#32770' title='Save As' /&gt;" SearchSteps="Selector, FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                                      <uix:TargetAnchorable.Anchors>
+                                        <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                          <uix:Target CVScreenId="7f4aa0aa-8451-40eb-99f6-8daaad0a8c3c" CvTextArea="91, 457, 69, 15" CvTextArgument="File name:" CvType="Text" DesignTimeRectangle="22, 452, 144, 28" ElementType="Text" FullSelectorArgument="&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;ctrl name='Explorer Pane' role='pane' /&gt;&lt;ctrl name='Folder Layout Pane' role='pane' /&gt;&lt;ctrl name='Details Pane' role='pane' /&gt;&lt;ctrl name='File name:' role='text' /&gt;" FuzzySelectorArgument="&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;ctrl name='Explorer Pane' role='pane' /&gt;&lt;ctrl name='Folder Layout Pane' role='pane' /&gt;&lt;ctrl name='Details Pane' role='pane' /&gt;&lt;ctrl name='File name:' role='text' automationid='' check:text='File name:' /&gt;" Guid="8b2173ba-65c7-4e0e-b133-4456ab7d9e2f" SearchSteps="Selector, FuzzySelector, CV" />
+                                        </scg:List>
+                                      </uix:TargetAnchorable.Anchors>
+                                    </uix:TargetAnchorable>
+                                  </uix:NTypeInto.Target>
+                                  <uix:NTypeInto.VerifyOptions>
+                                    <uix:VerifyExecutionTypeIntoOptions DisplayName="{x:Null}" Mode="Appears">
+                                      <uix:VerifyExecutionTypeIntoOptions.Retry>
+                                        <InArgument x:TypeArguments="x:Boolean" />
+                                      </uix:VerifyExecutionTypeIntoOptions.Retry>
+                                      <uix:VerifyExecutionTypeIntoOptions.Timeout>
+                                        <InArgument x:TypeArguments="x:Double" />
+                                      </uix:VerifyExecutionTypeIntoOptions.Timeout>
+                                    </uix:VerifyExecutionTypeIntoOptions>
+                                  </uix:NTypeInto.VerifyOptions>
+                                </uix:NTypeInto>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;PDF downloading completed&quot;]" />
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">PDF downloading completed</InArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                                <ui:GetLastDownloadedFile FileResource="{x:Null}" IgnoreFiles="{x:Null}" Timeout="{x:Null}" DisplayName="Wait for Download" DownloadFolder="[in_OutputFolderPath]" File="[DownloadFileCheck]" sap:VirtualizedContainerService.HintSize="518.4,567.2" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_1">
+                                  <ui:GetLastDownloadedFile.Body>
+                                    <ActivityAction>
+                                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="416,276.8" sap2010:WorkflowViewState.IdRef="Sequence_37">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <uix:NClick ActivateBefore="True" ClickType="Single" DelayBefore="[TimeSpan.Parse(&quot;00:00:05&quot;).TotalSeconds]" DisplayName="Click '&amp;Save'" sap:VirtualizedContainerService.HintSize="382.4,216.8" sap2010:WorkflowViewState.IdRef="NClick_27" InteractionMode="HardwareEvents" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="29b0a399-d81f-483c-b928-686f4b2ef0c1" Version="V4">
+                                          <uix:NClick.Target>
+                                            <uix:TargetAnchorable BrowserURL="apvendor.costco.com/sap/opu/odata/costpd/payer_direct_srv/ViewPdfSet(ViewKey='MzIwWjEwMDQgNjUxNzkzNjI4OTIwMjU@')/$value" CVScreenId="7f4aa0aa-8451-40eb-99f6-8daaad0a8c3c" ContentHash="LRlSpU5U2keLs0eAsOvJBg" CvElementArea="695, 541, 110, 33" CvTextArea="733, 551, 33, 13" CvTextArgument="Save" CvType="Button" DesignTimeRectangle="696, 543, 110, 33" DesignTimeScaleFactor="1.25" ElementType="Button" FullSelectorArgument="&lt;wnd ctrlid='1' title='&amp;amp;Save' /&gt;" FuzzySelectorArgument="&lt;wnd ctrlid='1' title='&amp;amp;Save' check:text='&amp;amp;Save' /&gt;" Guid="6381a1ac-bee1-46a1-a342-94c566ab509d" InformativeScreenshot="ec74421ad97b57d12558a2677831eae3.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/CVpxteDVPkOxgqsBNKklDA" ScopeSelectorArgument="&lt;wnd app='chrome.exe' cls='#32770' title='Save As' /&gt;" SearchSteps="Selector, FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+                                          </uix:NClick.Target>
+                                          <uix:NClick.VerifyOptions>
+                                            <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                                              <uix:VerifyExecutionOptions.Retry>
+                                                <InArgument x:TypeArguments="x:Boolean" />
+                                              </uix:VerifyExecutionOptions.Retry>
+                                              <uix:VerifyExecutionOptions.Timeout>
+                                                <InArgument x:TypeArguments="x:Double" />
+                                              </uix:VerifyExecutionOptions.Timeout>
+                                            </uix:VerifyExecutionOptions>
+                                          </uix:NClick.VerifyOptions>
+                                        </uix:NClick>
+                                      </Sequence>
+                                    </ActivityAction>
+                                  </ui:GetLastDownloadedFile.Body>
+                                </ui:GetLastDownloadedFile>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;Clicked on save button&quot;]" />
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="518.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_16" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">Clicked on save button</InArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                                <ui:GetActiveWindow ApplicationWindow="[CurrentActiveWindow]" DisplayName="Get Active Window" sap:VirtualizedContainerService.HintSize="518.4,844" sap2010:WorkflowViewState.IdRef="GetActiveWindow_1">
+                                  <ui:GetActiveWindow.Body>
+                                    <ActivityAction x:TypeArguments="x:Object">
+                                      <ActivityAction.Argument>
+                                        <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                      </ActivityAction.Argument>
+                                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="483.2,740.8" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Use Application/Browser" sap:VirtualizedContainerService.HintSize="449.6,680.8" sap2010:WorkflowViewState.IdRef="NApplicationCard_3" InUiElement="[CurrentActiveWindow]" OpenMode="Never" ScopeGuid="878b345c-4b6d-4d5d-9fa3-0dbf27c20d39" Version="V2">
+                                          <uix:NApplicationCard.Body>
+                                            <ActivityAction x:TypeArguments="x:Object">
+                                              <ActivityAction.Argument>
+                                                <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+                                              </ActivityAction.Argument>
+                                              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="416,520.8" sap2010:WorkflowViewState.IdRef="Sequence_39">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <uix:NNavigateBrowser Action="CloseTab" DisplayName="Navigate Browser - Close Tab" sap:VirtualizedContainerService.HintSize="382.4,114.4" sap2010:WorkflowViewState.IdRef="NNavigateBrowser_2" Version="V4" />
+                                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="382.4,176" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;Downloaded pdf page is closed&quot;]" />
+                                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="LogWriting - Invoke Workflow File (Framework\LogWriting.xaml)" sap:VirtualizedContainerService.HintSize="382.4,168.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="Framework\Utilities\LogWriting.xaml">
+                                                  <ui:InvokeWorkflowFile.Arguments>
+                                                    <InArgument x:TypeArguments="x:String" x:Key="in_FolderPath">[in_AuditLogFilePath]</InArgument>
+                                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogLevel">INFO</InArgument>
+                                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogMessage">Downloaded page close successfully</InArgument>
+                                                  </ui:InvokeWorkflowFile.Arguments>
+                                                </ui:InvokeWorkflowFile>
+                                              </Sequence>
+                                            </ActivityAction>
+                                          </uix:NApplicationCard.Body>
+                                          <uix:NApplicationCard.TargetApp>
+                                            <uix:TargetApp Area="0, 0, 0, 0" Version="V1" />
+                                          </uix:NApplicationCard.TargetApp>
+                                        </uix:NApplicationCard>
+                                      </Sequence>
+                                    </ActivityAction>
+                                  </ui:GetActiveWindow.Body>
+                                </ui:GetActiveWindow>
+                              </Sequence>
+                            </uix:NCheckState.IfNotExists>
+                            <uix:NCheckState.Target>
+                              <uix:TargetAnchorable BrowserURL="apvendor.costco.com/vp/index.html" CVScreenId="2bc0004c-a14c-48c3-9495-95b00999c422" ContentHash="4A60eGScQUq4pCQSH9TP6A" CvTextArea="814, 639, 257, 27" CvTextArgument="No Results Found" CvType="Text" DesignTimeRectangle="815, 639, 257, 27" DesignTimeScaleFactor="1.25" ElementType="Text" Guid="49f75469-d3d7-4f54-98cd-4794012c7fad" InformativeScreenshot="96afcf0decd396414f278e345ba66abe.png" Reference="BrZ-K_ynyEioGU8Gc3rEeg/BXy66qa7QEqr1sqUZPBz5Q" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Vendor Accounting Portal － Payment History' /&gt;" SearchSteps="CV" TargetType="ComputerVisionBased" Version="V4" Visibility="Interactive" />
+                            </uix:NCheckState.Target>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </uix:NCheckState>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEachRow.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ForEachRow>
+                </Sequence>
+              </ActivityAction>
+            </uix:NApplicationCard.Body>
+            <uix:NApplicationCard.TargetApp>
+              <uix:TargetApp Area="-9, -9, 1938, 1048" BrowserType="Chrome" IconBase64="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABLSURBVDhP7c6xEQAgCENR9l+CUfVioDKoJYX/Lt0rYq0ajysbt2BIdcHqYEh1C7n7tgyGVBesDoZUt9B/cA6GVBesDoZUl+C2VplNFyNVyOLZh00AAAAASUVORK5CYII=" InformativeScreenshot="de782f6058d5afd7f76bafc46ac8f422.jpg" Selector="&lt;html app='chrome.exe' title='Vendor Accounting Portal － About You' /&gt;" Title="Vendor Accounting Portal － About You" Url="[in_ConfigUncharegeabeType(&quot;VendorManagementURL&quot;).ToString]" Version="V1" />
+            </uix:NApplicationCard.TargetApp>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </uix:NApplicationCard>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="UploadUnidentifiedChargeTypeToSharePoint - Invoke Workflow File (UploadUnidentifiedChargeTypeToSharePoint.xaml)" sap:VirtualizedContainerService.HintSize="1188.8,167.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\SharePoint\UploadFilesToSharepointLibrary.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="in_OutputFolderPath">[in_OutputFolderPath]</InArgument>
+              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_ConfigUncharegeabeType">[in_ConfigUncharegeabeType]</InArgument>
+              <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Object))" x:Key="out_SharepointReferenceId">[out_SharepointReferenceId]</OutArgument>
+              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_UnidentifiedChargebackTypeData">[out_dt_UnidentifiedChargeType]</InArgument>
+              <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_UnidentifiedChargebackTypeData">[out_dt_UnidentifiedChargeType]</OutArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_AuditLogFilePath">[in_AuditLogFilePath]</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="1225.6,23.2" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence sap:VirtualizedContainerService.HintSize="416,284" sap2010:WorkflowViewState.IdRef="Sequence_44">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="TakeScreenshot - Invoke Workflow File (Framework\Utilities\TakeScreenshot.xaml)" sap:VirtualizedContainerService.HintSize="382.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" UnSafe="False" WorkflowFileName="Framework\Utilities\TakeScreenshot.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[in_OutputFolderPath+"\"+in_ConfigUncharegeabeType("ExScreenshotsFolderPath").ToString]</InArgument>
+                  <InOutArgument x:TypeArguments="x:String" x:Key="io_FilePath" />
+                  <InArgument x:TypeArguments="x:String" x:Key="in_CurrentStateError">[in_CurrentStateError]</InArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <Rethrow sap:VirtualizedContainerService.HintSize="382.4,48" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="1225.6,23.2" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="ui:BusinessRuleException">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence sap:VirtualizedContainerService.HintSize="416,284" sap2010:WorkflowViewState.IdRef="Sequence_45">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="TakeScreenshot - Invoke Workflow File (Framework\Utilities\TakeScreenshot.xaml)" sap:VirtualizedContainerService.HintSize="382.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_21" UnSafe="False" WorkflowFileName="Framework\Utilities\TakeScreenshot.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[in_OutputFolderPath+"\"+in_ConfigUncharegeabeType("ExScreenshotsFolderPath").ToString]</InArgument>
+                  <InOutArgument x:TypeArguments="x:String" x:Key="io_FilePath" />
+                  <InArgument x:TypeArguments="x:String" x:Key="in_CurrentStateError">[in_CurrentStateError]</InArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <Rethrow sap:VirtualizedContainerService.HintSize="382.4,48" sap2010:WorkflowViewState.IdRef="Rethrow_2" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>
