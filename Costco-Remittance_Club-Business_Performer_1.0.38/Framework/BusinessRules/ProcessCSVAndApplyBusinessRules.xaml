@@ -1,0 +1,1813 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umaf="clr-namespace:UiPath.MicrosoftOffice365.Activities.Files;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umafe="clr-namespace:UiPath.MicrosoftOffice365.Activities.Files.Enums;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umafm="clr-namespace:UiPath.MicrosoftOffice365.Activities.Files.Models;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:umfm="clr-namespace:UiPath.MicrosoftOffice365.Files.Models;assembly=UiPath.MicrosoftOffice365" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:usau="clr-namespace:UiPath.Shared.Activities.Utils;assembly=UiPath.MicrosoftOffice365.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_BusinessConfigPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_DownloadCsvPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_TechnicalConfigPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_PaymentDate" Type="InArgument(x:String)" />
+    <x:Property Name="in_GstPaybleWorkbookPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_GstSheetStartYear" Type="InArgument(x:Int32)" />
+    <x:Property Name="in_GstSheetStartMonth" Type="InArgument(x:Int32)" />
+    <x:Property Name="out_EmptyRowsIndexMap" Type="OutArgument(scg:Dictionary(x:String, scg:Queue(x:Int32)))" />
+    <x:Property Name="out_AllCostcoLastRowNumber" Type="OutArgument(x:Int32)" />
+    <x:Property Name="out_dt_EmptyData" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="in_PdfCountryName" Type="InArgument(x:String)" />
+    <x:Property Name="out_dt_BusinessRuleAppliedData" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="in_OrderReportWorkbookPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_AllCostcoWorkbookPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_InputFolderPath" Type="InArgument(x:String)" />
+    <x:Property Name="in_OutputFolderPath" Type="InArgument(x:String)" />
+    <x:Property Name="out_UploadedAllCostcoWorkbookUrl" Type="OutArgument(x:String)" />
+    <x:Property Name="in_AuditLogFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_GeneralBusinessConfig" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+  </x:Members>
+  <this:Main.in_TechnicalConfigPath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Main.in_TechnicalConfigPath>
+  <this:Main.in_PdfCountryName>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Main.in_PdfCountryName>
+  <this:Main.in_InputFolderPath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Main.in_InputFolderPath>
+  <this:Main.in_OutputFolderPath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Main.in_OutputFolderPath>
+  <this:Main.in_AuditLogFilePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Main.in_AuditLogFilePath>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.Platform</x:String>
+      <x:String>UiPath.CSV</x:String>
+      <x:String>UiPath.CSV.Activities</x:String>
+      <x:String>System.Numerics</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.Excel.Activities.Business</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>UiPath.Excel.Model</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Files.Enums</x:String>
+      <x:String>UiPath.Shared.Activities.Utils</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Enums</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Files.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Files.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Files</x:String>
+      <x:String>UiPath.Shared.Activities.ConnectionService.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Files.Contracts</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities</x:String>
+      <x:String>UiPath.MicrosoftOffice365</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>Microsoft.Extensions.DependencyModel</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>UiPath.CodedWorkflows</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>System.Linq.Parallel</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Linq.Queryable</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>FasterLookUpApproachesTest.Core</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
+      <AssemblyReference>System.CodeDom</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Forms</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
+      <AssemblyReference>Costco-Remittance_Club-Business_Performer.Core</AssemblyReference>
+      <AssemblyReference>Costco-Remittance_Club-Business_Performer.Core</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow11</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow9</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow10</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow3</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow1</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable4</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow8</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable7</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow6</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow2</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable5</AssemblyReference>
+      <AssemblyReference>System.Linq.Async.Queryable</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow19</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow18</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow12</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow25</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow17</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow22</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow27</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow14</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable21</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow28</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow26</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow15</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow24</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow20</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow16</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow13</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow23</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow31</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow30</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow32</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow34</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow29</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataRow33</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1452.0000000000002,15733.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Int32" Name="index">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:String x:Key="SourceIdRef">ForEach`1_2</x:String>
+            <x:String x:Key="SourcePropertyName">CurrentIndex</x:String>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </Variable>
+      <Variable x:TypeArguments="x:Boolean" Name="IsRowEmpty" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="783.2,15710.4" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="746.4,15456" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[CInt(in_Config(&quot;MaxRetryCount&quot;).ToString().Trim())]" RetryInterval="[TimeSpan.FromSeconds(CInt(in_Config(&quot;RetryInterval&quot;)))]">
+          <ui:RetryScope.ActivityBody>
+            <ActivityAction>
+              <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="704.8,15280" sap2010:WorkflowViewState.IdRef="Sequence_31">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Sequence sap2010:Annotation.AnnotationText="This workflow processes the downloaded remittance CSV data by applying predefined business rules to transform, validate, and categorize the data for further processing." DisplayName="Process CSV and apply business rule" sap:VirtualizedContainerService.HintSize="671.2,15220" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Name="ExcelFilePath" />
+                    <Variable x:TypeArguments="upr:ILocalResource" Name="ExcelFileLocalResource" />
+                    <Variable x:TypeArguments="sd:DataTable" Name="dt_DownloadedInvoiceData" />
+                    <Variable x:TypeArguments="scg:List(x:String)" Name="ListOfExcelNames" />
+                    <Variable x:TypeArguments="sd:DataTable" Name="dt_QueryOutput" />
+                    <Variable x:TypeArguments="scg:Dictionary(x:String, x:Int32)" Name="InvoiceIndexMap" />
+                    <Variable x:TypeArguments="x:Int32" Name="CurrentIndex" />
+                    <Variable x:TypeArguments="x:String" Name="CreditAmountColumnName" />
+                    <Variable x:TypeArguments="x:String" Name="HstGstCreditColumnName" />
+                    <Variable x:TypeArguments="x:String" Name="GstPayableSheetName" />
+                    <Variable x:TypeArguments="x:String" Name="PaymentAmountColumnName" />
+                    <Variable x:TypeArguments="x:String" Name="InvoiceTotalColumnName" />
+                    <Variable x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:String))" Name="BusinessLookupConfig" />
+                    <Variable x:TypeArguments="sd:DataTable" Name="ReferenceSheet" />
+                    <Variable x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" Name="LookupOutput" />
+                    <Variable x:TypeArguments="scg:List(x:String)" Name="BusinessRuleColumnNames" />
+                    <Variable x:TypeArguments="x:String" Name="BusinessConfigFilePath" />
+                    <Variable x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, scg:List(x:Object)))" Name="BusinessChargebackTypeConfig" />
+                    <Variable x:TypeArguments="x:String" Name="TechnicalConfigPath" />
+                    <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="TechnicalConfig" />
+                    <Variable x:TypeArguments="x:Int32" Name="CurRow" />
+                    <Variable x:TypeArguments="x:String" Name="PaymentDate" />
+                    <Variable x:TypeArguments="x:String" Name="EmptyTableIndexMapKeyName" />
+                    <Variable x:TypeArguments="x:String" Name="OrderReportWorkbookPath" />
+                    <Variable x:TypeArguments="x:String" Name="AllCostcoRemittanceSheetName" />
+                    <Variable x:TypeArguments="x:String" Name="Range" />
+                    <Variable x:TypeArguments="umfm:O365DriveRemoteItem" Name="UploadedAllCostcoObject" />
+                    <Variable x:TypeArguments="scg:Dictionary(x:String, x:Int32)" Name="HstRowsIndexMap" />
+                    <Variable x:TypeArguments="scg:HashSet(x:String)" Name="UniqueInvoiceNumberSet" />
+                    <Variable x:TypeArguments="x:String" Name="BusinessRuleDataTableName" />
+                    <Variable x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Int32))" Name="NewEmptyRowIndexMap" />
+                    <Variable x:TypeArguments="x:Int32" Name="CurRowIndex" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign DisplayName="ExcelFilePath" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_1">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[ExcelFilePath]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_DownloadCsvPath]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign DisplayName="BusinessConfigFilePath" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_21">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[BusinessConfigFilePath]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_BusinessConfigPath]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="TechnicalConfigPath" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_22">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[TechnicalConfigPath]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_TechnicalConfigPath]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="BusinessRuleColumnNames" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_20">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="scg:List(x:String)">[BusinessRuleColumnNames]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="scg:List(x:String)">[in_Config("BusinessRuleColumnNames").ToString().Split(",").Select(Function(item) item.ToString().Trim()).ToList()]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign DisplayName="ExcelFileLocalResource" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_2">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="upr:ILocalResource">[ExcelFileLocalResource]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="upr:ILocalResource">[LocalResource.FromPath(ExcelFilePath)]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign DisplayName="CreditAmountColumnName" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_13">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[CreditAmountColumnName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_Config("CreditAmountColumnName").ToString]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign DisplayName="CreditAmountColumnName" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_14">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[HstGstCreditColumnName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_Config("HstGstCreditColumnName").ToString]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign DisplayName="PaymentAmountColumnName" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_16">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[PaymentAmountColumnName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_Config("PaymentAmountColumnName").ToString]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_18">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[InvoiceTotalColumnName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_Config("InvoiceTotalColumnName").tostring]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="GstPayableSheetName" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_15">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[GstPayableSheetName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_GstPaybleWorkbookPath]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign DisplayName="GstPayableSheetName" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_26">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[PaymentDate]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_PaymentDate]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_44">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[EmptyTableIndexMapKeyName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_Config("EmptyTableIndexMapKeyName").ToString]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="AllCostcoWorkbookPath" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_47">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[OrderReportWorkbookPath]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_OrderReportWorkbookPath]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="AllCostcoRemittanceSheetName" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_48">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[AllCostcoRemittanceSheetName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[in_Config("AllCostcoRemittanceSheetName").ToString]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[string.Format("Reading the file {0}", ExcelFileLocalResource.FullName)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:ReadCsvFile FilePath="{x:Null}" DataTable="[dt_DownloadedInvoiceData]" Delimitator="Comma" DelimitatorForViewModel="Comma" DisplayName="Read CSV - Costco downloaded invoice data" sap:VirtualizedContainerService.HintSize="637.6,187.2" sap2010:WorkflowViewState.IdRef="ReadCsvFile_1" PathResource="[ExcelFileLocalResource]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ReadCsvFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Successfully read {0} completed", ExcelFileLocalResource.FullName)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Reading lookup config"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadBusinessConfigLookup - Invoke Workflow File (Framework\Config\ReadLookupConfig.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\Config\ReadBusinessConfigLookup.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFilePath">[BusinessConfigFilePath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LookupSheetName">[in_Config("BusinessLookupSheetName").ToString()]</InArgument>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:String))" x:Key="out_LookupConfig">[BusinessLookupConfig]</OutArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_ReferenceSheetName">[in_Config("BusinessReferenceSheetName").ToString]</InArgument>
+                      <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_ReferenceSheet">[ReferenceSheet]</OutArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Sucessfully completed lookup config reading"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Reading business workbook chargeback config"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadBusinessConfigChargebackType - Invoke Workflow File (Framework\Config\ReadChargebackConfig.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Framework\Config\ReadBusinessConfigChargebackType.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFilePath">[BusinessConfigFilePath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_ChargebackSheetName">[in_Config("BusinessChargebackTypeSheetName").ToString]</InArgument>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, scg:List(x:Object)))" x:Key="out_ChargebackConfig">[BusinessChargebackTypeConfig]</OutArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_ColumnNamesName">[in_Config("BusinessChargebackTypeColumnName").ToString]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Successfully completed the reading of the business chargeback config"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_16" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Reading technical config file"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadTechnicalConfigRegex - Invoke Workflow File (Framework\Config\ReadTechnicalSheet.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\Config\ReadTechnicalConfigRegex.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFilePath">[TechnicalConfigPath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_TechnicalSheetName">[in_Config("TechnicalSheetChargebackTypeSheetName").ToString]</InArgument>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_TechnicalConfig">[TechnicalConfig]</OutArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Successfully completed reading the technical config file"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ExcelAsDbMultiSheetLookup - Invoke Workflow File (Framework\ApplyBusinessRule\ExcelAsDbMultiSheetLookup.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\BusinessRules\ExcelAsDbMultiSheetLookup.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Int32)" x:Key="out_InvoiceIndex">[InvoiceIndexMap]</OutArgument>
+                      <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_QueryOutput">[dt_QueryOutput]</OutArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_ExcelFilePath">[LocalResource.FromPath(GstPayableSheetName).LocalPath]</InArgument>
+                      <InArgument x:TypeArguments="scg:List(x:String)" x:Key="in_LookupValues">[dt_DownloadedInvoiceData.AsEnumerable().Select(Function(row) CStr(row("Invoice No."))).ToList()]</InArgument>
+                      <InArgument x:TypeArguments="x:Int32" x:Key="in_Year">[in_GstSheetStartYear]</InArgument>
+                      <InArgument x:TypeArguments="x:Int32" x:Key="in_Month">[in_GstSheetStartMonth]</InArgument>
+                      <InArgument x:TypeArguments="x:Int32" x:Key="in_MonthBackCount">[CInt(in_Config("MonthSheetCount"))]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_SheetNamePrefix">[in_Config("GstPayableSheetNamePrefix").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_SheetNameSuffix">[If(in_Config("GstPayableSheetNameSuffix").ToString()(0).Equals(" "), in_Config("GstPayableSheetNameSuffix").ToString(), String.Format(" {0}", in_Config("GstPayableSheetNameSuffix").ToString()))]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_StartRange">[in_Config("GstSheetHeader").ToString]</InArgument>
+                      <InArgument x:TypeArguments="scg:List(x:String)" x:Key="in_LookupReturnColumns">[in_Config("GSTPayableLookupReturnColumnNames").ToString.Split(",").Select(Function(item) item.Trim()).toList()]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LookupKey">[in_Config("BusinessLookupKey").ToString]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_18" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Lookup completed"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <Assign DisplayName="dt_FinalOutput" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_10">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sd:DataTable">[out_dt_BusinessRuleAppliedData]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sd:DataTable">[dt_DownloadedInvoiceData.Clone()]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign DisplayName="HST row index map - invoice : row_index" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_58">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Int32)">[HstRowsIndexMap]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Int32)">[new Dictionary(of string, Int32)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign sap2010:Annotation.AnnotationText="UniqueInvoiceNumberSet - To not to apply Canada Rules to duplicate invoice number" DisplayName="UniqueInvoiceNumberSet - To not to apply Canada Rules to duplicate invoice number" sap:VirtualizedContainerService.HintSize="637.6,157.6" sap2010:WorkflowViewState.IdRef="Assign_59">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="scg:HashSet(x:String)">[UniqueInvoiceNumberSet]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="scg:HashSet(x:String)">[new HashSet(of String)]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Loop Over Each Row of Downloaded Excel, loop [STARTED]"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="[CurrentIndex]" DataTable="[dt_DownloadedInvoiceData]" DisplayName="For Each Row in Data Table - Loop Over Each Row of Downloaded Excel" sap:VirtualizedContainerService.HintSize="637.6,56.8" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+                    <ui:ForEachRow.Body>
+                      <ActivityAction x:TypeArguments="sd:DataRow">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="534.4,3242.4" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="x:String" Name="CurInvoiceNumber" />
+                            <Variable x:TypeArguments="s:Object[]" Name="CleanCurRow" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Assign DisplayName="CleanCurRow" sap:VirtualizedContainerService.HintSize="500.8,113.6" sap2010:WorkflowViewState.IdRef="Assign_12">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="s:Object[]">[CleanCurRow]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="s:Object[]">[CurrentRow.ItemArray.Select(Function(item) item.ToString().Replace("'", "").Trim()).ToArray()]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[CleanCurRow]" DataTable="[out_dt_BusinessRuleAppliedData]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="500.8,220" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                          <If Condition="[in_PdfCountryName.ToLower().Equals(in_Config(&quot;Us&quot;).ToString.ToLower())]" sap:VirtualizedContainerService.HintSize="500.8,368" sap2010:WorkflowViewState.IdRef="If_8">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,108" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:Continue sap:VirtualizedContainerService.HintSize="382.4,48" sap2010:WorkflowViewState.IdRef="Continue_2" />
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_30">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                          <Assign DisplayName="CurInvoiceNumber" sap:VirtualizedContainerService.HintSize="500.8,113.6" sap2010:WorkflowViewState.IdRef="Assign_11">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[CurInvoiceNumber]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[out_dt_BusinessRuleAppliedData(out_dt_BusinessRuleAppliedData.Rows.Count - 1)(in_Config("EmptyTableIndexMapKeyName").ToString).ToString()]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <If Condition="[in_PdfCountryName.ToLower().Equals(in_Config(&quot;Us&quot;).ToString.ToLower()) Or UniqueInvoiceNumberSet.Contains(CurInvoiceNumber)]" sap:VirtualizedContainerService.HintSize="500.8,368" sap2010:WorkflowViewState.IdRef="If_19">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,108" sap2010:WorkflowViewState.IdRef="Sequence_54">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:Continue sap:VirtualizedContainerService.HintSize="382.4,48" sap2010:WorkflowViewState.IdRef="Continue_3" />
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_55">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                          <InvokeMethod sap2010:Annotation.AnnotationText="Add cur invoice number to hashset" DisplayName="Invoke Method" sap:VirtualizedContainerService.HintSize="500.8,198.4" sap2010:WorkflowViewState.IdRef="InvokeMethod_4" MethodName="Add">
+                            <InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="scg:HashSet(x:String)">[UniqueInvoiceNumberSet]</InArgument>
+                            </InvokeMethod.TargetObject>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <InArgument x:TypeArguments="x:String">[CurInvoiceNumber]</InArgument>
+                          </InvokeMethod>
+                          <If sap2010:Annotation.AnnotationText="If - InvoiceIndex Mmap contains the cur invoice number then add 2 more row" Condition="[InvoiceIndexMap.ContainsKey(CurInvoiceNumber)]" DisplayName="If - InvoiceIndex Mmap contains the cur invoice number then add 2 more row" sap:VirtualizedContainerService.HintSize="500.8,1820" sap2010:WorkflowViewState.IdRef="If_1">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,1537.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <Assign sap2010:Annotation.AnnotationText="Change Payment Amount column value with credit amount from lookup output table" DisplayName="Change Payment Amount column value" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="Assign_56">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[out_dt_BusinessRuleAppliedData(out_dt_BusinessRuleAppliedData.Rows.Count - 1)(PaymentAmountColumnName)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">[dt_QueryOutput(InvoiceIndexMap(CurInvoiceNumber))(in_Config("GSTPayableInvoiceTotalCoumnName").ToString)]</InArgument>
+                                  </Assign.Value>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </Assign>
+                                <Assign sap2010:Annotation.AnnotationText="Change  column value with credit amount from lookup output table" DisplayName="Change Payment Amount column value" sap:VirtualizedContainerService.HintSize="433.6,144.8" sap2010:WorkflowViewState.IdRef="Assign_57">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[out_dt_BusinessRuleAppliedData(out_dt_BusinessRuleAppliedData.Rows.Count - 1)(InvoiceTotalColumnName)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">[dt_QueryOutput(InvoiceIndexMap(CurInvoiceNumber))(in_Config("GSTPayableInvoiceTotalCoumnName").ToString)]</InArgument>
+                                  </Assign.Value>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </Assign>
+                                <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[CleanCurRow]" DataTable="[out_dt_BusinessRuleAppliedData]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="433.6,220" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+                                <Assign sap2010:Annotation.AnnotationText="Change Payment Amount column value with credit amount from lookup output table" DisplayName="Change Payment Amount column value" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="Assign_7">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[out_dt_BusinessRuleAppliedData(out_dt_BusinessRuleAppliedData.Rows.Count - 1)(PaymentAmountColumnName)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">[dt_QueryOutput(InvoiceIndexMap(CurInvoiceNumber))(CreditAmountColumnName)]</InArgument>
+                                  </Assign.Value>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </Assign>
+                                <Assign sap2010:Annotation.AnnotationText="Change Payment Amount column value with credit amount from lookup output table" DisplayName="Change Payment Amount column value" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="Assign_17">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[out_dt_BusinessRuleAppliedData(out_dt_BusinessRuleAppliedData.Rows.Count - 1)(InvoiceTotalColumnName)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">[dt_QueryOutput(InvoiceIndexMap(CurInvoiceNumber))(CreditAmountColumnName)]</InArgument>
+                                  </Assign.Value>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </Assign>
+                                <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[CleanCurRow]" DataTable="[out_dt_BusinessRuleAppliedData]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="433.6,220" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+                                <Assign sap2010:Annotation.AnnotationText="Change Payment Amount column value with &quot;HST/GST Credit&quot; from lookup output table" DisplayName="Change Payment Amount column value" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="Assign_8">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[out_dt_BusinessRuleAppliedData(out_dt_BusinessRuleAppliedData.Rows.Count - 1)(PaymentAmountColumnName)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">[dt_QueryOutput(InvoiceIndexMap(CurInvoiceNumber))(HstGstCreditColumnName)]</InArgument>
+                                  </Assign.Value>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </Assign>
+                                <Assign sap2010:Annotation.AnnotationText="Change Payment Amount column value with &quot;HST/GST Credit&quot; from lookup output table" DisplayName="Change Payment Amount column value" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="Assign_19">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[out_dt_BusinessRuleAppliedData(out_dt_BusinessRuleAppliedData.Rows.Count - 1)(InvoiceTotalColumnName)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">[dt_QueryOutput(InvoiceIndexMap(CurInvoiceNumber))(HstGstCreditColumnName)]</InArgument>
+                                  </Assign.Value>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </Assign>
+                                <Assign DisplayName="Add HST GST row index to map" sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_60">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Int32">[HstRowsIndexMap(CurInvoiceNumber)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Int32">[out_dt_BusinessRuleAppliedData.Rows.Count - 1]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEachRow.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ForEachRow>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_20" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Loop Over Each Row of Downloaded Excel - Completed clean up, also added duplicate rows if it's country is canada, loop [END]"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="RetrieveLookupValues - Invoke Workflow File (Framework\Lookup\GetLookupValues.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Framework\Lookup\RetrieveLookupValues.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:String))" x:Key="in_LookupConfig">[BusinessLookupConfig]</InArgument>
+                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_UpdatedDownloadRemitance">[out_dt_BusinessRuleAppliedData]</InArgument>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="out_LookupOutput">[LookupOutput]</OutArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_StartRange">[in_Config("OrdRptSheetHeader").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_BusinessConfigPath">[BusinessConfigFilePath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_InputFolderPath">[in_InputFolderPath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_40" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Extracted Lookup values using lookup sheet"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <If Condition="[in_PdfCountryName.ToLower().Equals(in_Config(&quot;Us&quot;).ToString.ToLower())]" DisplayName="If - Check The Country To Avoid Duplicate row creation" sap:VirtualizedContainerService.HintSize="637.6,56.8" sap2010:WorkflowViewState.IdRef="If_10">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,227.2" sap2010:WorkflowViewState.IdRef="Sequence_32">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="382.4,167.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_21" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Country name is US. Processing US-specific logic.")]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,375.2" sap2010:WorkflowViewState.IdRef="Sequence_33">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="382.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_22" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Country name is {0}. Writing output Excel file to path: {1}", in_PdfCountryName, in_OutputFolderPath + "\"+ String.Format("{0}_{1}_CanadaDuplicateRowOutput.xlsx", ExcelFileLocalResource.FullName.Replace(ExcelFileLocalResource.GetExtension(), ""), Now.ToString(in_Config("OutputDateTimeFormat").ToString)))]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                        <ui:WriteRange StartingCell="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[out_dt_BusinessRuleAppliedData]" DisplayName="Write Range Workbook" sap:VirtualizedContainerService.HintSize="382.4,139.2" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="[in_Config(&quot;OutputBusinessRuleDataSheetName&quot;).ToString]" WorkbookPath="[in_OutputFolderPath + &quot;\&quot;+ String.Format(&quot;{0}_{1}_CanadaDuplicateRowOutput.xlsx&quot;, ExcelFileLocalResource.FullName.Replace(ExcelFileLocalResource.GetExtension(), &quot;&quot;), Now.ToString(in_Config(&quot;OutputDateTimeFormat&quot;).ToString))]">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:WriteRange>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                  <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each BusinessColumnName - Add new column" sap:VirtualizedContainerService.HintSize="637.6,364.8" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[BusinessRuleColumnNames]">
+                    <ui:ForEach.Body>
+                      <ActivityAction x:TypeArguments="x:String">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:String" Name="BusinessColumnName" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,218.4" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <InvokeMethod DisplayName="Invoke Method" sap:VirtualizedContainerService.HintSize="382.4,158.4" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="Add">
+                            <InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="sd:DataColumnCollection">[out_dt_BusinessRuleAppliedData.Columns]</InArgument>
+                            </InvokeMethod.TargetObject>
+                            <InArgument x:TypeArguments="x:String">[BusinessColumnName]</InArgument>
+                          </InvokeMethod>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEach.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ForEach>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_23" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Created Business Rule columns in downloaded CSV data: {0}", String.Join(", ", BusinessRuleColumnNames))]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <Assign sap2010:Annotation.AnnotationText="Create an empty DataTable (out_dt_EmptyData) that has the same structure (columns) as the existing DataTable out_dt_BusinessRuleAppliedData, but with no rows.&#xA;" DisplayName="dt_EmptyData - to store empty row values data" sap:VirtualizedContainerService.HintSize="637.6,189.6" sap2010:WorkflowViewState.IdRef="Assign_36">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sd:DataTable">[out_dt_EmptyData]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sd:DataTable">[out_dt_BusinessRuleAppliedData.Clone()]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <Assign DisplayName="EmptyRowsIndexMap" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_42">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Int32))">[out_EmptyRowsIndexMap]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Int32))">[New Dictionary(of String, Queue(of Int32))]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_24" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Started loop to update Downloaded CSV data with lookup value loop [STARTED]"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="[CurRow]" DataTable="[out_dt_BusinessRuleAppliedData]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="637.6,5056" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                    <ui:ForEachRow.Body>
+                      <ActivityAction x:TypeArguments="sd:DataRow">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="604,4858.4" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="x:String" Name="ChargebackType" />
+                            <Variable x:TypeArguments="x:String" Name="InvoiceDateYearRegex" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Assign sap:VirtualizedContainerService.HintSize="570.4,113.6" sap2010:WorkflowViewState.IdRef="Assign_55">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="s:Object[]">[out_dt_BusinessRuleAppliedData.Rows(CurRow).ItemArray]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="s:Object[]">[CurrentRow.ItemArray.Select(Function(x) If(IsDBNull(x), String.Empty, x.ToString())).ToArray()]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign DisplayName="Check condition to check is previous row is empty" sap:VirtualizedContainerService.HintSize="570.4,113.6" sap2010:WorkflowViewState.IdRef="Assign_39">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Boolean">[IsRowEmpty]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="UpdateChargebackType - Invoke Workflow File (Framework\Lookup\UpdateChargebackType.xaml)" sap:VirtualizedContainerService.HintSize="570.4,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Framework\Lookup\UpdateChargebackType.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, scg:List(x:Object)))" x:Key="in_ChargebackTypeConfig">[BusinessChargebackTypeConfig]</InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_ChargeBackType">[ChargebackType]</OutArgument>
+                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_TechnicalConfig">[TechnicalConfig]</InArgument>
+                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_DownloadCsv">[out_dt_BusinessRuleAppliedData]</InArgument>
+                              <InArgument x:TypeArguments="x:Int32" x:Key="in_RowIndex">[CurRow]</InArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                          <If Condition="[HstRowsIndexMap.Count &gt; 0 And HstRowsIndexMap.ContainsKey(CurrentRow(in_Config(&quot;EmptyTableIndexMapKeyName&quot;).ToString()).ToString())]" DisplayName="If - Check cur invoice number present in hst row index map" sap:VirtualizedContainerService.HintSize="570.4,56.8" sap2010:WorkflowViewState.IdRef="If_14">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="534.4,476" sap2010:WorkflowViewState.IdRef="Sequence_45">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If Condition="[HstRowsIndexMap(CurrentRow(in_Config(&quot;EmptyTableIndexMapKeyName&quot;).ToString()).ToString) = CurRow]" sap:VirtualizedContainerService.HintSize="500.8,416" sap2010:WorkflowViewState.IdRef="If_15">
+                                  <If.Then>
+                                    <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,164.8" sap2010:WorkflowViewState.IdRef="Sequence_43">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <Assign DisplayName="Change Chargeback to GST Deduction" sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_61">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:String">[ChargebackType]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:String">[in_Config("HstGstChargebackType").ToString()]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </Sequence>
+                                  </If.Then>
+                                  <If.Else>
+                                    <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_44">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </Sequence>
+                                  </If.Else>
+                                </If>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_46">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                          <Assign DisplayName="Update current row chargeback type" sap:VirtualizedContainerService.HintSize="570.4,113.6" sap2010:WorkflowViewState.IdRef="Assign_23">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Object">[CurrentRow(in_Config("BusinessChargebackTypeSheetName").tostring)]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Object">[ChargebackType]</InArgument>
+                            </Assign.Value>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Assign>
+                          <Assign DisplayName="Assign - InvoiceDateYearRegex" sap:VirtualizedContainerService.HintSize="570.4,113.6" sap2010:WorkflowViewState.IdRef="Assign_49">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[InvoiceDateYearRegex]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[in_Config("InvoiceDateYearRegex").ToString]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign sap2010:Annotation.AnnotationText="Updates the values in the &quot;Ship Yr&quot; column of the DataTable." DisplayName="Update current row Ship Yr" sap:VirtualizedContainerService.HintSize="570.4,146.4" sap2010:WorkflowViewState.IdRef="Assign_24">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Object">[CurrentRow(in_Config("ShipYearUpdateColumnName").ToString)]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Object" xml:space="preserve">[If(
+String.IsNullOrEmpty(CurrentRow("Invoice Date").ToString()),
+String.Empty,
+System.Text.RegularExpressions.Regex.Match(CurrentRow("Invoice Date").ToString(),InvoiceDateYearRegex).Groups(1).Value
+)]</InArgument>
+                            </Assign.Value>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Assign>
+                          <Assign sap2010:Annotation.AnnotationText="Updates the values in the &quot;Payment Date&quot; column of the DataTable." DisplayName="Update current row payment date" sap:VirtualizedContainerService.HintSize="570.4,144.8" sap2010:WorkflowViewState.IdRef="Assign_25">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Object">[CurrentRow(in_Config("PaymentDateUpdateColumnName").ToString)]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Object">[PaymentDate]</InArgument>
+                            </Assign.Value>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Assign>
+                          <ui:ForEach x:TypeArguments="x:String" CurrentIndex="[index]" DisplayName="For Each CurrentLookupKey" sap:VirtualizedContainerService.HintSize="570.4,1860.8" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[BusinessLookupConfig.Keys]">
+                            <ui:ForEach.Body>
+                              <ActivityAction x:TypeArguments="x:String">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="x:String" Name="CurrentLookupKey" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="536.8,1714.4" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                                  <Sequence.Variables>
+                                    <Variable x:TypeArguments="x:String" Name="UpdateColumnName" />
+                                    <Variable x:TypeArguments="x:String" Name="LookupKeyName" />
+                                    <Variable x:TypeArguments="x:String" Name="LookupKeyValue" />
+                                    <Variable x:TypeArguments="scg:Dictionary(x:String, x:Int32)" Name="CurrentLookupIndexMap" />
+                                    <Variable x:TypeArguments="sd:DataTable" Name="CurrentLookupTable" />
+                                    <Variable x:TypeArguments="x:Int32" Name="IndexMapIndex" />
+                                    <Variable x:TypeArguments="x:String" Name="FinalLookupValue" />
+                                  </Sequence.Variables>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <Assign DisplayName="Get Lookup Key Name e.g Invoice No." sap:VirtualizedContainerService.HintSize="503.2,113.6" sap2010:WorkflowViewState.IdRef="Assign_29">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:String">[LookupKeyName]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:String">[BusinessLookupConfig(CurrentLookupKey)("Lookup Value Column Name")]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <Assign DisplayName="Get Value of Lookup Key From Current Row" sap:VirtualizedContainerService.HintSize="503.2,113.6" sap2010:WorkflowViewState.IdRef="Assign_30">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:String">[LookupKeyValue]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:String">[CurrentRow(LookupKeyName).ToString()]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <Assign DisplayName="Get Current lookup table" sap:VirtualizedContainerService.HintSize="503.2,113.6" sap2010:WorkflowViewState.IdRef="Assign_31">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="sd:DataTable">[CurrentLookupTable]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="sd:DataTable">[CType(LookupOutput(CurrentLookupKey)("LookupOutput"), System.Data.DataTable)]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <Assign DisplayName="Get current lookup index map" sap:VirtualizedContainerService.HintSize="503.2,113.6" sap2010:WorkflowViewState.IdRef="Assign_32">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Int32)">[CurrentLookupIndexMap]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Int32)">[CType(LookupOutput(CurrentLookupKey)("LookupIndex"), Dictionary(Of String, Int32))]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <Assign DisplayName="Check current lookup key value exist in index map" sap:VirtualizedContainerService.HintSize="503.2,113.6" sap2010:WorkflowViewState.IdRef="Assign_33">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Int32">[IndexMapIndex]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Int32">[if(CurrentLookupIndexMap.ContainsKey(LookupKeyValue), CurrentLookupIndexMap(LookupKeyValue), -1)]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <If Condition="[IndexMapIndex = -1]" DisplayName="If - Check lookup map index value is -1 - means empty lookup value" sap:VirtualizedContainerService.HintSize="503.2,481.6" sap2010:WorkflowViewState.IdRef="If_4">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <If.Then>
+                                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,221.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <Assign DisplayName="Assign - IsRowEmpty" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_38">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Boolean">[IsRowEmpty]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                        <ui:Continue sap:VirtualizedContainerService.HintSize="433.6,48" sap2010:WorkflowViewState.IdRef="Continue_1" />
+                                      </Sequence>
+                                    </If.Then>
+                                    <If.Else>
+                                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </Sequence>
+                                    </If.Else>
+                                  </If>
+                                  <If Condition="[BusinessLookupConfig(CurrentLookupKey)(&quot;Final Value&quot;).ToString().Trim().ToLower() = &quot;yes&quot;]" DisplayName="If - Check is lookup value is final value" sap:VirtualizedContainerService.HintSize="503.2,500" sap2010:WorkflowViewState.IdRef="If_3">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <If.Then>
+                                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,164.8" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <Assign DisplayName="FinalLookupValue - Take value from &quot;Lookup Column Name&quot;" sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_35">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:String">[FinalLookupValue]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:String">[CurrentLookupTable.Rows(IndexMapIndex)(BusinessLookupConfig(CurrentLookupKey)("Lookup Column Name")).ToString()]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </Sequence>
+                                    </If.Then>
+                                    <If.Else>
+                                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="469.6,164.8" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <Assign DisplayName="FinalLookupValue - Take value as CurrentLookupKey e.g Account, Brand..." sap:VirtualizedContainerService.HintSize="436,104.8" sap2010:WorkflowViewState.IdRef="Assign_34">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:String">[FinalLookupValue]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:String">[CurrentLookupTable.Rows(IndexMapIndex)(CurrentLookupKey).ToString()]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </Sequence>
+                                    </If.Else>
+                                  </If>
+                                  <Assign sap:VirtualizedContainerService.HintSize="503.2,104.8" sap2010:WorkflowViewState.IdRef="Assign_28">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Object">[CurrentRow(CurrentLookupKey)]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Object">[FinalLookupValue]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:ForEach.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:ForEach>
+                          <If Condition="[in_PdfCountryName.ToLower().Equals(in_Config(&quot;Us&quot;).ToString.ToLower())]" DisplayName="If - Selection of account value based on country found in PDF" sap:VirtualizedContainerService.HintSize="570.4,500" sap2010:WorkflowViewState.IdRef="If_18">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,164.8" sap2010:WorkflowViewState.IdRef="Sequence_52">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <Assign DisplayName="Assign - Account for US" sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_69">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[CurrentRow(in_Config("Account").ToString)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">[in_GeneralBusinessConfig(in_Config("USAccountKey").ToString).ToString]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else " sap:VirtualizedContainerService.HintSize="467.2,164.8" sap2010:WorkflowViewState.IdRef="Sequence_53">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <Assign DisplayName="Assign - Account for Canada" sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_70">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[CurrentRow(in_Config("Account").ToString)]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">[in_GeneralBusinessConfig(in_Config("CanadaAccountKey").ToString).ToString]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                          <If sap2010:Annotation.AnnotationText="If - Skipped processing row due to empty ChargebackType or empty row." Condition="[(string.IsNullOrEmpty(ChargebackType) or IsRowEmpty) And not String.Equals(ChargebackType, in_Config(&quot;ActionCenterSkipChargebackTypeName&quot;).ToString().Trim())]" DisplayName="If - Skipped processing row due to empty ChargebackType or empty row." sap:VirtualizedContainerService.HintSize="570.4,1459.2" sap2010:WorkflowViewState.IdRef="If_11">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="534.4,1039.2" sap2010:WorkflowViewState.IdRef="Sequence_37">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="500.8,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_36" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Skipped processing row due to empty ChargebackType or empty row. ChargebackType: {0}, IsRowEmpty: {1}", ChargebackType, IsRowEmpty)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ui:InvokeWorkflowFile>
+                                <If Condition="[Not out_EmptyRowsIndexMap.ContainsKey(CurrentRow(EmptyTableIndexMapKeyName).ToString())]" DisplayName="If - Check if the invoice number in the current row is NOT already present as a key in the out_EmptyRowsIndexMap dictionary." sap:VirtualizedContainerService.HintSize="500.8,424.8" sap2010:WorkflowViewState.IdRef="If_12">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Then>
+                                    <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,164.8" sap2010:WorkflowViewState.IdRef="Sequence_39">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <Assign sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_54">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="scg:Queue(x:Int32)">[out_EmptyRowsIndexMap(CurrentRow(EmptyTableIndexMapKeyName).ToString())]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="scg:Queue(x:Int32)">[New Queue(of Int32)]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </Sequence>
+                                  </If.Then>
+                                  <If.Else>
+                                    <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_40">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </Sequence>
+                                  </If.Else>
+                                </If>
+                                <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[out_dt_BusinessRuleAppliedData.Rows(CurRow).ItemArray]" DataTable="[out_dt_EmptyData]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="500.8,220" sap2010:WorkflowViewState.IdRef="AddDataRow_8">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ui:AddDataRow>
+                                <InvokeMethod DisplayName="Invoke Method" sap:VirtualizedContainerService.HintSize="500.8,158.4" sap2010:WorkflowViewState.IdRef="InvokeMethod_2" MethodName="Enqueue">
+                                  <InvokeMethod.TargetObject>
+                                    <InArgument x:TypeArguments="scg:Queue(x:Int32)">[out_EmptyRowsIndexMap(CurrentRow(EmptyTableIndexMapKeyName).ToString())]</InArgument>
+                                  </InvokeMethod.TargetObject>
+                                  <InArgument x:TypeArguments="x:Int32">[CurRow]</InArgument>
+                                </InvokeMethod>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,227.2" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="382.4,167.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_37" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Processing row with ChargebackType: {0}", ChargebackType)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ui:InvokeWorkflowFile>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEachRow.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ForEachRow>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,56.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_25" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Started loop to update Downloaded CSV data with lookup value loop [END]"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <Assign DisplayName="Assign" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_62">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[BusinessRuleDataTableName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[out_dt_BusinessRuleAppliedData.TableName]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="Update Business Rule Data with Filled chargeback type first and then empty" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_63">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sd:DataTable">[out_dt_BusinessRuleAppliedData]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sd:DataTable">[out_dt_BusinessRuleAppliedData.AsEnumerable().OrderBy(Function(row) String.IsNullOrWhiteSpace(row(in_Config("BusinessChargebackTypeSheetName").tostring).ToString)).CopyToDataTable()]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="Assign " sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_65">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[out_dt_BusinessRuleAppliedData.TableName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[BusinessRuleDataTableName]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="Create New Empty Row Index Map" sap:VirtualizedContainerService.HintSize="637.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_64">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Int32))">[NewEmptyRowIndexMap]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Int32))">[New Dictionary(of String, Queue(of Int32))]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="[CurRowIndex]" DataTable="[out_dt_BusinessRuleAppliedData]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="637.6,56.8" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+                    <ui:ForEachRow.Body>
+                      <ActivityAction x:TypeArguments="sd:DataRow">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="524,858.4" sap2010:WorkflowViewState.IdRef="Sequence_47">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="x:String" Name="CurInvoiceNumber" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Assign DisplayName="Get Current Invoice Number" sap:VirtualizedContainerService.HintSize="490.4,113.6" sap2010:WorkflowViewState.IdRef="Assign_66">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[CurInvoiceNumber]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[CurrentRow(in_Config("EmptyTableIndexMapKeyName").ToString()).ToString()]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <If Condition="[out_EmptyRowsIndexMap.ContainsKey(CurInvoiceNumber)]" DisplayName="If - Check Old Empty Row Index Map Contains Cur Invoice Number as key" sap:VirtualizedContainerService.HintSize="490.4,684.8" sap2010:WorkflowViewState.IdRef="If_16">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,433.6" sap2010:WorkflowViewState.IdRef="Sequence_50">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If Condition="[Not NewEmptyRowIndexMap.ContainsKey(CurInvoiceNumber)]" DisplayName="If - Cur invoice number not present in new Empty index map" sap:VirtualizedContainerService.HintSize="382.4,215.2" sap2010:WorkflowViewState.IdRef="If_17">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Then>
+                                    <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="467.2,164.8" sap2010:WorkflowViewState.IdRef="Sequence_48">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <Assign DisplayName="Create Queue if Cur Invoice Number not in new empty index map" sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_67">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="scg:Queue(x:Int32)">[NewEmptyRowIndexMap(CurInvoiceNumber)]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="scg:Queue(x:Int32)">[new Queue(of Int32)]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </Sequence>
+                                  </If.Then>
+                                  <If.Else>
+                                    <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_49">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </Sequence>
+                                  </If.Else>
+                                </If>
+                                <InvokeMethod DisplayName="Invoke Method - Add cur index to queue" sap:VirtualizedContainerService.HintSize="382.4,158.4" sap2010:WorkflowViewState.IdRef="InvokeMethod_3" MethodName="Enqueue">
+                                  <InvokeMethod.TargetObject>
+                                    <InArgument x:TypeArguments="scg:Queue(x:Int32)">[NewEmptyRowIndexMap(CurInvoiceNumber)]</InArgument>
+                                  </InvokeMethod.TargetObject>
+                                  <InArgument x:TypeArguments="x:Int32">[CurRowIndex]</InArgument>
+                                </InvokeMethod>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_51">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEachRow.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ForEachRow>
+                  <Assign DisplayName="Re Assign New Empty row index map to old" sap:VirtualizedContainerService.HintSize="637.6,56.8" sap2010:WorkflowViewState.IdRef="Assign_68">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Int32))">[out_EmptyRowsIndexMap]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Queue(x:Int32))">[NewEmptyRowIndexMap]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,56.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_26" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Starting Excel Process Scope for file: " + in_AllCostcoWorkbookPath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="637.6,1440.8" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_2">
+                    <ueab:ExcelProcessScopeX.Body>
+                      <ActivityAction x:TypeArguments="ui:IExcelProcess">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="534.4,1322.4" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" SensitivityLabel="{x:Null}" CreateNewFile="False" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="500.8,1262.4" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_2" ResizeWindow="None" SensitivityOperation="None" WorkbookPath="[LocalResource.FromPath(in_AllCostcoWorkbookPath).LocalPath]">
+                            <ueab:ExcelApplicationCard.Body>
+                              <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="467.2,969.6" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ueab:FindFirstLastDataRowX FirstRowIndex="{x:Null}" sap2010:Annotation.AnnotationText="Retrieving the last row from the AllCostcoRemittance file." BlankRowsToSkip="1" ColumnName="[in_Config(&quot;EmptyTableIndexMapKeyName&quot;).ToString]" ConfigureLastRowAs="LastPopulatedRow" DisplayName="Find First/Last Data Row" FirstRowOffset="0" HasHeaders="True" sap:VirtualizedContainerService.HintSize="433.6,374.4" sap2010:WorkflowViewState.IdRef="FindFirstLastDataRowX_2" LastRowIndex="[out_AllCostcoLastRowNumber]" LastRowOffset="0" Range="[Excel.Sheet(AllCostcoRemittanceSheetName)]" VisibleRowsOnly="False">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ueab:FindFirstLastDataRowX>
+                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="433.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_28" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                                    <ui:InvokeWorkflowFile.Arguments>
+                                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Writing business rule applied data to Excel sheet: " + AllCostcoRemittanceSheetName]</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                                    </ui:InvokeWorkflowFile.Arguments>
+                                  </ui:InvokeWorkflowFile>
+                                  <ueab:WriteRangeX Append="True" Destination="[Excel.Sheet(AllCostcoRemittanceSheetName)]" DisplayName="Write DataTable to Excel" ExcludeHeaders="True" sap:VirtualizedContainerService.HintSize="433.6,192" sap2010:WorkflowViewState.IdRef="WriteRangeX_2" IgnoreEmptySource="False" Source="[out_dt_BusinessRuleAppliedData]" />
+                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="433.6,167.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_27" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                                    <ui:InvokeWorkflowFile.Arguments>
+                                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Data written successfully to sheet: " + AllCostcoRemittanceSheetName]</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                                    </ui:InvokeWorkflowFile.Arguments>
+                                  </ui:InvokeWorkflowFile>
+                                </Sequence>
+                              </ActivityAction>
+                            </ueab:ExcelApplicationCard.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ueab:ExcelApplicationCard>
+                        </Sequence>
+                      </ActivityAction>
+                    </ueab:ExcelProcessScopeX.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ueab:ExcelProcessScopeX>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,56.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_29" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Data written successfully to sheet: {0}, in workbook: {1}", AllCostcoRemittanceSheetName, in_AllCostcoWorkbookPath)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <ui:WriteRange StartingCell="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[out_dt_BusinessRuleAppliedData]" DisplayName="Write Range Workbook -Duplicate record for canada" sap:VirtualizedContainerService.HintSize="637.6,148" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="[in_Config(&quot;OutputBusinessRuleDataSheetName&quot;).ToString]" WorkbookPath="[in_OutputFolderPath + &quot;\&quot;+ String.Format(&quot;{0}_{1}.xlsx&quot;, ExcelFileLocalResource.FullName.Replace(ExcelFileLocalResource.GetExtension(), &quot;&quot;), Now.ToString(in_Config(&quot;OutputDateTimeFormat&quot;).ToString))]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:WriteRange>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_30" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Written Business Rule applied data to workbook: {0}, sheet: {1}", in_OutputFolderPath + "\"+ String.Format("{0}_{1}.xlsx", ExcelFileLocalResource.FullName.Replace(ExcelFileLocalResource.GetExtension(), ""), Now.ToString(in_Config("OutputDateTimeFormat").ToString)),in_Config("OutputBusinessRuleDataSheetName").ToString)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <ui:WriteRange StartingCell="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" DataTable="[out_dt_EmptyData]" DisplayName="Write Range Workbook  - records with empty charegeback type" sap:VirtualizedContainerService.HintSize="637.6,148" sap2010:WorkflowViewState.IdRef="WriteRange_3" SheetName="[in_Config(&quot;OutputBusinessRuleDataSheetName&quot;).ToString]" WorkbookPath="[in_OutputFolderPath + &quot;\&quot;+ String.Format(&quot;{0}_{1}_empty_data.xlsx&quot;, ExcelFileLocalResource.FullName.Replace(ExcelFileLocalResource.GetExtension(), &quot;&quot;), Now.ToString(in_Config(&quot;OutputDateTimeFormat&quot;).ToString))]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:WriteRange>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_34" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">[String.Format("Written Business Rule applied data to workbook: {0}, sheet: {1}", in_OutputFolderPath + "\" + String.Format("{0}_{1}_empty_data.xlsx", ExcelFileLocalResource.FullName.Replace(ExcelFileLocalResource.GetExtension(), ""), Now.ToString(in_Config("OutputDateTimeFormat").ToString())), in_Config("OutputBusinessRuleDataSheetName").ToString())]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_35" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Uploading all Costco Master Remittance sheet on sharepoint library"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="637.6,464.8" sap2010:WorkflowViewState.IdRef="RetryScope_4" NumberOfRetries="[CInt(in_Config(&quot;MaxRetryCount&quot;).ToString.Trim)]" RetryInterval="[TimeSpan.FromSeconds(CInt(in_Config(&quot;RetryInterval&quot;).ToString.Trim))]">
+                    <ui:RetryScope.ActivityBody>
+                      <ActivityAction>
+                        <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="416,256.8" sap2010:WorkflowViewState.IdRef="Sequence_42">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <umaf:UploadFilesConnections AllResults="{x:Null}" BrowserParentItemId="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" ItemIdBackup="{x:Reference __ReferenceID0}" ManualEntryDriveName="{x:Null}" ManualEntryItemFullPath="{x:Null}" ManualEntryItemId="{x:Null}" ManualEntryItemRelativePath="{x:Null}" ManualEntryItemUrl="{x:Null}" ManualEntrySiteUrl="{x:Null}" Metadata="{x:Null}" MultipleFilesToUpload="{x:Null}" SingleFileToUpload="{x:Null}" AuthScopesInvalid="False" BrowserDriveId="b!dLziggz1yUaHOXJP3xWGWJGfiU6SpIRFqStvsNMEjlSuLImGR4RRR7VcZEww2KuM" BrowserDriveName="Remittance Library" BrowserItemFriendlyName="Master Remittance" BrowserItemId="01FXV57TONJ2RFQLEJ2FCYT4OM445A2DUB" BrowserSiteUrl="https://fambrandsllc.sharepoint.com/sites/COSTCORemittance/Remittance%20Library/Master%20Remittance" ConflictResolution="Replace" ConnectionId="7f7ac744-9a6f-48f5-8b6f-047fcd79a82d" DisplayName="Upload Files - AllCostcoRemittance File" FilesInputMode="MultipleByBuilder" FirstResult="[UploadedAllCostcoObject]" sap:VirtualizedContainerService.HintSize="382.4,196.8" sap2010:WorkflowViewState.IdRef="UploadFilesConnections_1" ItemSelectionMode="Browse" UseConnectionService="True">
+                            <umaf:UploadFilesConnections.DriveItemArgument>
+                              <umafm:DriveItemArgument BrowserParentDriveId="{x:Null}" BrowserParentDriveName="{x:Null}" BrowserParentItemFriendlyName="{x:Null}" BrowserParentItemId="{x:Null}" BrowserParentPath="{x:Null}" BrowserSpecificUrl="{x:Null}" ConnectionDescriptor="{x:Null}" FullPathHint="{x:Null}" Item="{x:Null}" ManualEntryDriveName="{x:Null}" ManualEntryItemFullPath="{x:Null}" ManualEntryItemId="{x:Null}" ManualEntryItemRelativePath="{x:Null}" ManualEntryItemUrl="{x:Null}" ManualEntrySiteUrl="{x:Null}" ReferenceId="{x:Null}" BrowserDriveId="b!dLziggz1yUaHOXJP3xWGWJGfiU6SpIRFqStvsNMEjlSuLImGR4RRR7VcZEww2KuM" BrowserDriveName="Remittance Library" BrowserItemFriendlyName="Master Remittance" BrowserItemId="01FXV57TONJ2RFQLEJ2FCYT4OM445A2DUB" BrowserSiteUrl="https://fambrandsllc.sharepoint.com/sites/COSTCORemittance/Remittance%20Library/Master%20Remittance" ConnectionKey="7f7ac744-9a6f-48f5-8b6f-047fcd79a82d" ItemSelectionMode="Browse" ParentFullPathHint="">
+                                <umafm:DriveItemArgument.ItemIdBackup>
+                                  <usau:BackupSlot x:TypeArguments="umafe:EDriveItemMode" x:Name="__ReferenceID0" StoredValue="Browse">
+                                    <usau:BackupSlot.BackupValues>
+                                      <scg:Dictionary x:TypeArguments="umafe:EDriveItemMode, scg:List(x:Object)" />
+                                    </usau:BackupSlot.BackupValues>
+                                  </usau:BackupSlot>
+                                </umafm:DriveItemArgument.ItemIdBackup>
+                              </umafm:DriveItemArgument>
+                            </umaf:UploadFilesConnections.DriveItemArgument>
+                            <umaf:UploadFilesConnections.FilesBackup>
+                              <usau:BackupSlot x:TypeArguments="umafe:FilesInputMode" StoredValue="MultipleByBuilder">
+                                <usau:BackupSlot.BackupValues>
+                                  <scg:List x:TypeArguments="x:Object" x:Key="MultipleByVariable" Capacity="1">
+                                    <x:Null />
+                                  </scg:List>
+                                </usau:BackupSlot.BackupValues>
+                              </usau:BackupSlot>
+                            </umaf:UploadFilesConnections.FilesBackup>
+                            <umaf:UploadFilesConnections.FilesList>
+                              <scg:List x:TypeArguments="InArgument(upr:IResource)" Capacity="4">
+                                <InArgument x:TypeArguments="upr:IResource">[LocalResource.FromPath(in_AllCostcoWorkbookPath)]</InArgument>
+                              </scg:List>
+                            </umaf:UploadFilesConnections.FilesList>
+                          </umaf:UploadFilesConnections>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:RetryScope.ActivityBody>
+                    <ui:RetryScope.Condition>
+                      <ActivityFunc x:TypeArguments="x:Boolean" />
+                    </ui:RetryScope.Condition>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:RetryScope>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InfoWriteLog - Invoke Workflow File (Framework\Utilities\InfoWriteLog.xaml)" sap:VirtualizedContainerService.HintSize="637.6,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_33" UnSafe="False" WorkflowFileName="Framework\Utilities\InfoWriteLog.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:Object" x:Key="in_LogMessage">["Uploaded all Costco Master Remittance sheet on sharepoint library"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_LogFilePath">[in_AuditLogFilePath]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <Assign DisplayName="Assign - Uploaded file url" sap:VirtualizedContainerService.HintSize="637.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_53">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[out_UploadedAllCostcoWorkbookUrl]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[UploadedAllCostcoObject.Url]</InArgument>
+                    </Assign.Value>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Assign>
+                </Sequence>
+              </Sequence>
+            </ActivityAction>
+          </ui:RetryScope.ActivityBody>
+          <ui:RetryScope.Condition>
+            <ActivityFunc x:TypeArguments="x:Boolean" />
+          </ui:RetryScope.Condition>
+        </ui:RetryScope>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="749.6,23.2" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Rethrow sap:VirtualizedContainerService.HintSize="334.4,24.8" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>
